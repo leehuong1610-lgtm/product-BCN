@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding - Thiết lập Hồ sơ Kỹ năng</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-box" style="max-width: 650px; padding: 40px;">
+        
+        <div class="icon-lock"><i class="fas fa-route" style="font-size: 3em; background-image: linear-gradient(to right, #8C82FF, #4F9AFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i></div>
+        <h2 style="font-size: 2.2em; margin-bottom: 5px;">Bắt đầu Lộ trình Phát triển</h2>
+        <p class="subtitle" style="margin-bottom: 30px;">
+            Hoàn thành 3 bước đơn giản để cá nhân hóa Dashboard của bạn.
+        </p>
+        
+        <div id="progress-indicator" style="display: flex; justify-content: space-between; margin-bottom: 40px; padding: 0 50px;">
+            <div class="step-icon-container" data-step="1">
+                <div class="step-circle active" id="circle-1">1</div>
+                <small>Ngành học</small>
+            </div>
+            <div class="step-line" style="width: 100px; height: 2px; background-color: var(--color-background-muted); margin-top: 19px;"></div>
+            <div class="step-icon-container" data-step="2">
+                <div class="step-circle" id="circle-2">2</div>
+                <small>Kỹ năng</small>
+            </div>
+            <div class="step-line" style="width: 100px; height: 2px; background-color: var(--color-background-muted); margin-top: 19px;"></div>
+            <div class="step-icon-container" data-step="3">
+                <div class="step-circle" id="circle-3">3</div>
+                <small>Hoàn tất</small>
+            </div>
+        </div>
+
+
+        <form id="onboarding-form"> <div id="step-1" class="onboarding-step fade-in">
+                <h3 style="font-size: 1.5em; color: var(--color-text-dark);">Bước 1: Thông tin Ngành học</h3>
+                <p style="margin-bottom: 20px;">Chúng tôi cần thông tin này để so sánh bạn với điểm chuẩn thị trường.</p>
+                <div class="form-group">
+                    <label for="major" style="text-align: left;">Ngành học/Chuyên ngành của bạn:</label>
+                    <input type="text" id="major" placeholder="Ví dụ: Marketing, Công nghệ thông tin..." required>
+                </div>
+                <div class="form-group">
+                    <label for="university" style="text-align: left;">Trường Đại học:</label>
+                    <input type="text" id="university" placeholder="Tên trường..." required>
+                </div>
+                <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="validateStep(1)">Tiếp theo</button>
+            </div>
+
+
+            <div id="step-2" class="onboarding-step fade-in" style="display: none;">
+                <h3 style="font-size: 1.5em; color: var(--color-text-dark);">Bước 2: Mục tiêu Kỹ năng</h3>
+                <p style="margin-bottom: 20px;">Chọn mục tiêu chính và các kỹ năng bạn muốn tập trung phát triển.</p>
+                <div class="form-group">
+                    <label for="goal">Mục tiêu Kỹ năng Lớn nhất của bạn:</label>
+                    <select id="goal" required>
+                        <option value="leadership">Lãnh đạo (Leadership)</option>
+                        <option value="communication">Giao tiếp (Communication)</option>
+                        <option value="teamwork">Làm việc nhóm (Teamwork)</option>
+                        <option value="critical_thinking">Tư duy Phản biện (Critical Thinking)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label style="margin-bottom: 10px;">Các kỹ năng bạn muốn tập trung (Chọn 3):</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: left;">
+                        <label><input type="checkbox" name="focus_skill" value="Leadership"> Leadership</label>
+                        <label><input type="checkbox" name="focus_skill" value="Teamwork"> Teamwork</label>
+                        <label><input type="checkbox" name="focus_skill" value="Presentation"> Presentation</label>
+                        <label><input type="checkbox" name="focus_skill" value="ProblemSolving"> Problem Solving</label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" style="width: 48%; margin-top: 20px; box-shadow: none;" onclick="transitionStep(1)">Quay lại</button>
+                <button type="button" class="btn btn-primary" style="width: 48%; margin-top: 20px; float: right;" onclick="handleOnboardingSubmit()">Hoàn tất</button>
+            </div>
+
+        </form>
+    </div>
+    
+    <script>
+        let currentStep = 1;
+        const totalSteps = 2;
+        const form = document.getElementById('onboarding-form');
+
+        // Hàm kiểm tra tính hợp lệ của các trường trong một bước
+        function isStepValid(stepNumber) {
+            const stepElement = document.getElementById(`step-${stepNumber}`);
+            let valid = true;
+            
+            // Lấy tất cả các trường required trong bước hiện tại
+            const requiredFields = stepElement.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value || (field.type === 'checkbox' && !field.checked)) {
+                    valid = false;
+                    // Kích hoạt xác thực HTML5 để hiển thị lỗi
+                    field.reportValidity();
+                }
+            });
+            return valid;
+        }
+
+        // Hàm chuyển bước (có kiểm tra)
+        function validateStep(stepNumber) {
+            if (isStepValid(stepNumber)) {
+                 // Nếu hợp lệ, chuyển sang bước tiếp theo
+                transitionStep(stepNumber + 1);
+            } else {
+                alert("Vui lòng điền đầy đủ các trường bắt buộc.");
+            }
+        }
+        
+        // Hàm chuyển bước với hiệu ứng
+        function transitionStep(targetStep) {
+            const currentElement = document.getElementById(`step-${currentStep}`);
+            const targetElement = document.getElementById(`step-${targetStep}`);
+            
+            currentElement.style.opacity = '0';
+            currentElement.style.transform = 'translateX(' + (targetStep > currentStep ? '-20px' : '20px') + ')';
+
+            setTimeout(() => {
+                currentElement.style.display = 'none';
+                currentStep = targetStep;
+                updateProgressIndicator(currentStep);
+
+                targetElement.style.display = 'block';
+                targetElement.style.transform = 'translateX(0)';
+                targetElement.style.opacity = '1';
+                
+            }, 300);
+
+            targetElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            currentElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        }
+
+
+        // Hàm cập nhật chỉ báo tiến trình
+        function updateProgressIndicator(step) {
+            for (let i = 1; i <= totalSteps; i++) {
+                const circle = document.getElementById(`circle-${i}`);
+                const small = circle.nextElementSibling;
+
+                if (i < step) {
+                    circle.classList.remove('active');
+                    circle.classList.add('completed');
+                    circle.innerHTML = '<i class="fas fa-check"></i>';
+                    small.style.color = 'var(--color-accent)';
+                } else if (i === step) {
+                    circle.classList.add('active');
+                    circle.classList.remove('completed');
+                    circle.textContent = i;
+                    small.style.color = 'var(--color-primary)';
+                } else {
+                    circle.classList.remove('active', 'completed');
+                    circle.textContent = i;
+                    small.style.color = 'var(--color-text-medium)';
+                }
+            }
+            // Cập nhật bước cuối cùng (Hoàn tất)
+            const finalCircle = document.getElementById('circle-3');
+            if (step > totalSteps) {
+                 finalCircle.classList.add('active', 'completed');
+                 finalCircle.innerHTML = '<i class="fas fa-check"></i>';
+                 finalCircle.nextElementSibling.style.color = 'var(--color-accent)';
+            } else {
+                 finalCircle.classList.remove('active', 'completed');
+                 finalCircle.textContent = 3;
+                 finalCircle.nextElementSibling.style.color = 'var(--color-text-medium)';
+            }
+        }
+
+        // Xử lý nút Hoàn tất
+        function handleOnboardingSubmit() {
+            if (isStepValid(currentStep)) {
+                // Giả lập bước cuối cùng (Bước 3: Hoàn tất)
+                updateProgressIndicator(totalSteps + 1); 
+
+                const goal = document.getElementById('goal').value;
+                alert(`Thiết lập ${goal} thành công! Chuyển hướng tới Dashboard.`);
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 500); 
+            }
+        }
+
+        // Thêm CSS nhỏ bổ sung cho hiệu ứng Stepper
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .step-circle {
+                width: 40px; height: 40px; background-color: var(--color-background-muted); 
+                color: var(--color-text-medium); border-radius: 50%; line-height: 40px;
+                font-weight: 600; margin: 0 auto 5px auto; transition: all 0.3s ease;
+                border: 2px solid var(--color-background-muted);
+            }
+            .step-circle.active {
+                background-color: var(--color-primary); color: white; border-color: var(--color-primary);
+            }
+            .step-circle.completed {
+                background-color: var(--color-accent); color: var(--color-text-dark);
+                font-size: 1.1em; line-height: 36px; border-color: var(--color-accent);
+            }
+            .onboarding-step {
+                opacity: 0;
+                transform: translateX(0);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        // Khởi tạo trạng thái ban đầu
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('step-1').style.opacity = '1';
+            updateProgressIndicator(currentStep);
+        });
+    </script>
+
+</body>
+</html>

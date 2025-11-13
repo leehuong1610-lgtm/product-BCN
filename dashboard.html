@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Future Xion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+    
+    <div class="dashboard-layout">
+        
+        <aside class="sidebar">
+            <div class="logo">future<span class="logo-xion">Xion</span></div>
+            <nav>
+                <a href="#" class="active"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="activity.html"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
+                <a href="report.html"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
+                <a href="settings.html"><i class="fas fa-cog"></i> Cài đặt</a>
+                <a href="auth.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="dashboard-header" style="border-bottom: none; padding-bottom: 0;">
+                <h1 id="welcome-message" style="margin-bottom: 5px;">Dashboard Cá Nhân</h1>
+                <a href="activity.html" class="btn btn-accent"><i class="fas fa-plus"></i> Ghi nhận Hoạt động Mới</a>
+            </div>
+
+            <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-top: 20px;">
+                <a href="report.html" class="stat-card" style="text-decoration: none;">
+                    <h3><i class="fas fa-star primary-color"></i> Điểm Kỹ năng (AVG)</h3>
+                    <p style="font-size: 2.2em; color: var(--color-primary);">4.0</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">Trên 5 kỹ năng cốt lõi</p>
+                </a>
+                <a href="history.html" class="stat-card" style="text-decoration: none;">
+                    <h3><i class="fas fa-clipboard-list primary-color"></i> Hoạt động Đã Ghi</h3>
+                    <p style="font-size: 2.2em; color: var(--color-text-dark);">12</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">Xem nhật ký chi tiết</p>
+                </a>
+                <a href="badges.html" class="stat-card" style="text-decoration: none;">
+                    <h3><i class="fas fa-award accent-color"></i> Huy hiệu Hiện tại</h3>
+                    <p style="font-size: 2.2em; color: var(--color-accent);">2</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">Chiến Binh Teamwork</p>
+                </a>
+                <a href="goals.html" class="stat-card" style="text-decoration: none;">
+                    <h3><i class="fas fa-bullseye primary-color"></i> Tiến độ Mục tiêu</h3>
+                    <p style="font-size: 2.2em; color: var(--color-primary);">80%</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">Leadership 4.2 / 4.5</p>
+                </a>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 40px;">
+                
+                <div style="display: flex; flex-direction: column; gap: 30px;">
+                    
+                    <div class="chart-area" style="flex-grow: 1; padding: 30px;">
+                        <h2 style="font-size: 2em; margin-bottom: 20px;">Phân tích Điểm mạnh/Yếu</h2>
+                        <div style="height: 400px; width: 100%;">
+                            <canvas id="skillsRadarChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-area" style="padding: 20px; flex-grow: 1;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px; color: var(--color-primary);">Bằng chứng (Skill Narrative)</h3>
+                        <table class="activity-table">
+                            <thead>
+                                <tr><th>Hoạt động</th><th>Narrative (Tóm tắt)</th><th>Thao tác</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Dự án Green Campus</td><td>[Lãnh đạo]: Đã dẫn dắt nhóm 5 người.</td><td><a href="history.html" class="btn-link">Chi tiết</a></td></tr>
+                                <tr><td>Khóa học Comm.</td><td>[Giao tiếp]: Hoàn thành 10 module thuyết trình.</td><td><a href="history.html" class="btn-link">Chi tiết</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 30px;">
+                    
+                    <div class="chart-area" style="padding: 30px; flex-grow: 1;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px; color: var(--color-primary);">Skill Spotlight & Khuyến nghị</h3>
+                        <div class="reco-box" style="border-left: 5px solid var(--color-accent); margin-bottom: 20px;">
+                            <p style="font-weight: 600; color: #dc3545;">Ưu tiên: TƯ DUY PHẢN BIỆN (2.8)</p>
+                            <p style="font-size: 0.9em; margin-bottom: 10px;">Điểm dưới mức yêu cầu (3.5).</p>
+                            <a href="courses.html" class="btn btn-primary" style="padding: 10px 15px; font-size: 0.9em; box-shadow: none;">Tìm Khóa học Cải thiện</a>
+                        </div>
+                        
+                        <div class="stat-card" style="box-shadow: none; padding: 0;">
+                            <h4 style="font-size: 1.2em; color: var(--color-text-dark); margin-bottom: 5px;">Mạnh nhất: GQ Vấn đề (4.5)</h4>
+                            <p style="font-size: 0.9em; color: var(--color-text-medium);">Đã vượt mức yêu cầu ngành.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-area" style="padding: 30px; flex-grow: 1;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">Điều khiển Tương tác (Demo)</h3>
+                        <p style="font-size: 0.9em; margin-bottom: 20px;">Thay đổi điểm số để xem biểu đồ cập nhật ngay lập tức.</p>
+                        <div id="interaction-sliders">
+                            <div class="form-group"><label for="slider-0" style="display: flex; justify-content: space-between;">Lãnh đạo: <span id="value-0">4.2</span></label><input type="range" id="slider-0" min="10" max="50" step="1" value="42" oninput="updateChartData(0, this.value)"></div>
+                            <div class="form-group"><label for="slider-1" style="display: flex; justify-content: space-between;">Giao tiếp: <span id="value-1">3.8</span></label><input type="range" id="slider-1" min="10" max="50" step="1" value="38" oninput="updateChartData(1, this.value)"></div>
+                            <div class="form-group"><label for="slider-2" style="display: flex; justify-content: space-between;">GQ Vấn đề: <span id="value-2">4.5</span></label><input type="range" id="slider-2" min="10" max="50" step="1" value="45" oninput="updateChartData(2, this.value)"></div>
+                            <div class="form-group"><label for="slider-3" style="display: flex; justify-content: space-between;">Teamwork: <span id="value-3">4.0</span></label><input type="range" id="slider-3" min="10" max="50" step="1" value="40" oninput="updateChartData(3, this.value)"></div>
+                        </div>
+                        <button onclick="resetChartData()" class="btn btn-primary" style="margin-top: 20px; width: 100%; background-color: var(--color-callout); border-color: var(--color-callout);">
+                            <i class="fas fa-undo-alt"></i> Khôi phục Điểm Ban đầu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+    let skillsRadarChart; 
+
+    // LƯU TRỮ DỮ LIỆU BAN ĐẦU
+    const initialSkillsData = [4.2, 3.8, 4.5, 4.0, 2.8]; 
+    const industryDemand = [4.5, 4.0, 4.7, 4.2, 3.5]; 
+    const skillsLabels = [
+        'Lãnh đạo',
+        'Giao tiếp',
+        'Giải quyết Vấn đề',
+        'Làm việc nhóm',
+        'Tư duy Phản biện',
+    ];
+
+    const mockData = {
+        labels: skillsLabels.map((label, i) => `${label} (${initialSkillsData[i].toFixed(1)})`),
+        datasets: [{
+            label: 'Điểm Của Bạn',
+            data: initialSkillsData,
+            fill: true,
+            backgroundColor: 'rgba(0, 100, 0, 0.3)', 
+            borderColor: 'var(--color-primary)',
+            pointBackgroundColor: 'var(--color-callout)', 
+            pointBorderColor: '#fff',
+        },
+        { 
+            label: 'Mức Yêu cầu Ngành',
+            data: industryDemand,
+            fill: false,
+            borderColor: 'rgba(255, 215, 0, 0.7)', 
+            pointRadius: 0,
+            borderDash: [5, 5],
+            borderWidth: 1
+        }]
+    };
+
+    const config = {
+        type: 'radar',
+        data: mockData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                    grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                    pointLabels: { font: { size: 14, family: 'Poppins' }, color: 'var(--color-text-dark)' },
+                    suggestedMin: 0,
+                    suggestedMax: 5.0,
+                    ticks: { stepSize: 1.0, color: 'var(--color-text-medium)' }
+                }
+            },
+            plugins: {
+                legend: { display: true, position: 'top', labels: { font: { family: 'Poppins' } } },
+                tooltip: { callbacks: { label: (context) => { 
+                    const label = context.dataset.label;
+                    const value = context.formattedValue;
+                    return ` ${label}: ${value}`;
+                } } }
+            }
+        },
+    };
+
+    function updateChartData(index, rawValue) {
+        const newValue = parseFloat(rawValue / 10).toFixed(1); 
+        document.getElementById(`value-${index}`).textContent = newValue;
+
+        skillsRadarChart.data.datasets[0].data[index] = parseFloat(newValue);
+        skillsRadarChart.data.labels[index] = `${skillsLabels[index]} (${newValue})`;
+
+        skillsRadarChart.update();
+    }
+    
+    // HÀM RESET MỚI
+    function resetChartData() {
+        const sliders = document.getElementById('interaction-sliders').getElementsByTagName('input');
+        
+        // Khôi phục giá trị slider và label
+        for(let i = 0; i < sliders.length; i++) {
+            const initialValueForSlider = initialSkillsData[i] * 10;
+            sliders[i].value = initialValueForSlider;
+            document.getElementById(`value-${i}`).textContent = initialSkillsData[i].toFixed(1);
+        }
+
+        // Khôi phục dữ liệu biểu đồ
+        skillsRadarChart.data.datasets[0].data = [...initialSkillsData]; // Dùng spread để tạo bản sao
+        skillsRadarChart.data.labels = skillsLabels.map((label, i) => `${label} (${initialSkillsData[i].toFixed(1)})`);
+
+        skillsRadarChart.update();
+    }
+
+    window.onload = function() {
+        const userName = localStorage.getItem('currentUser') || 'Sinh viên Future Xion';
+        document.getElementById('welcome-message').textContent = `Dashboard của ${userName}`;
+        
+        var ctx = document.getElementById('skillsRadarChart').getContext('2d');
+        skillsRadarChart = new Chart(ctx, config); 
+    };
+</script>

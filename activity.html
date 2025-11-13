@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghi nhận Hoạt động - Future Xion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">future<span class="logo-xion">Xion</span></div>
+            <nav>
+                <a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="#" class="active"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
+                <a href="report.html"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
+                <a href="settings.html"><i class="fas fa-cog"></i> Cài đặt</a>
+                <a href="auth.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Ghi nhận Hoạt động Mới</h1>
+            </div>
+
+            <div style="display: flex; gap: 30px;">
+                
+                <div style="flex: 2;">
+                    <div class="activity-box glass-box" style="padding: 40px;">
+                        <form id="activity-form">
+                            
+                            <h3 style="color: var(--color-primary);">1. Thông tin Cơ bản & Vai trò</h3>
+                            <div class="form-group"><label for="activity-name">Tên Hoạt động:</label><input type="text" id="activity-name" placeholder="Ví dụ: Dự án 'Green Campus'" required></div>
+                            <div style="display: flex; gap: 20px;">
+                                <div class="form-group" style="flex: 1;"><label for="activity-date">Ngày Hoàn thành:</label><input type="date" id="activity-date" required></div>
+                                <div class="form-group" style="flex: 1;"><label for="role">Vai trò:</label>
+                                    <select id="role" required><option value="leader">Trưởng nhóm/Quản lý</option><option value="member">Thành viên cốt cán</option><option value="presenter">Thuyết trình</option><option value="participant">Học viên/Tham gia</option></select>
+                                </div>
+                            </div>
+                            
+                            <h3 style="margin-top: 30px; color: var(--color-primary);">2. Kỹ năng & Trọng số</h3>
+                            <div class="form-group">
+                                <label>Kỹ năng phát triển (Chọn tối đa 3):</label>
+                                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                                    <label><input type="checkbox" name="skill" value="Leadership" onchange="updateImpactPreview()"> Lãnh đạo</label>
+                                    <label><input type="checkbox" name="skill" value="Communication" onchange="updateImpactPreview()"> Giao tiếp</label>
+                                    <label><input type="checkbox" name="skill" value="Teamwork" onchange="updateImpactPreview()"> Làm việc nhóm</label>
+                                    <label><input type="checkbox" name="skill" value="ProblemSolving" onchange="updateImpactPreview()"> Giải quyết VĐ</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="challenge">Mức độ Thử thách cá nhân (1 - Thấp, 5 - Cao):</label>
+                                <input type="range" id="challenge" min="1" max="5" value="3" oninput="document.getElementById('challenge-value').innerText = this.value; updateImpactPreview()">
+                                <p style="text-align: center;">Mức độ hiện tại: <span id="challenge-value" style="font-weight: 700; color: var(--color-primary);">3</span></p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="supervisor-email">Email Giám sát (Tùy chọn):</label>
+                                <input type="email" id="supervisor-email" placeholder="Email của Trưởng nhóm/Giảng viên">
+                                <p style="font-size: 0.8em; color: var(--color-text-dark); margin-top: 5px;">*Giúp xác thực vai trò, tăng **20%** độ tin cậy của điểm.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Mô tả ngắn gọn về công việc/kết quả (Dùng cho CV):</label>
+                                <textarea id="description" rows="4" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">
+                                <i class="fas fa-save"></i> Lưu & Tính Điểm Kỹ Năng
+                            </button>
+                            <a href="dashboard.html" class="btn btn-link" style="margin-left: 20px;">Hủy bỏ</a>
+                        </form>
+                    </div>
+                </div>
+
+                <div style="flex: 1;">
+                    <div class="activity-box glass-box" style="padding: 30px; margin-bottom: 30px;">
+                        <h3 style="color: var(--color-primary); margin-top: 0;">Preview: Tác động Tức thời</h3>
+                        <p style="font-size: 0.9em; margin-bottom: 15px;">Xem điểm kỹ năng ước tính sẽ tăng lên.</p>
+                        
+                        <div style="height: 200px;"><canvas id="impactMiniChart"></canvas></div>
+                        
+                        <div style="margin-top: 20px; font-weight: 600;">
+                            <p>Vai trò Hiện tại: <span id="preview-role-impact">Trưởng nhóm (+0.5đ)</span></p>
+                            <p>Thử thách Cá nhân: <span id="preview-challenge-impact">+0.3đ</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="reco-box" style="border-left: 5px solid var(--color-accent);">
+                        <h3 style="font-size: 1.2em; margin-bottom: 5px;">Hướng dẫn: Dữ liệu chất lượng</h3>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;">- Chọn **"Trưởng nhóm"** khi bạn có trách nhiệm quản lý kết quả cuối cùng.</p>
+                        <p style="font-size: 0.9em;">- Mô tả **"Kết quả"** bằng số liệu (ví dụ: "Tăng 10% hiệu suất").</p>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script>
+        // Khởi tạo Mini Chart
+        let impactChart;
+        const initialImpactData = [0.1, 0.1, 0.1, 0.1]; // Khởi tạo điểm thấp
+
+        function initializeChart() {
+            const ctx = document.getElementById('impactMiniChart').getContext('2d');
+            impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Teamwork', 'Lead.', 'Comm.', 'Prob.S.'],
+                    datasets: [{
+                        label: 'Tác động ước tính',
+                        data: initialImpactData,
+                        backgroundColor: 'rgba(90, 24, 154, 0.5)',
+                        borderColor: 'var(--color-primary)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { suggestedMin: 0, suggestedMax: 1.0, ticks: { stepSize: 0.2 }, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Cập nhật Mini Chart (Chức năng XỊN)
+        function updateImpactPreview() {
+            const role = document.getElementById('role').value;
+            const challenge = parseInt(document.getElementById('challenge').value);
+            const selectedSkills = Array.from(document.querySelectorAll('input[name="skill"]:checked')).map(cb => cb.value);
+
+            let roleScore = 0;
+            let roleText = 'Tham gia (+0.1đ)';
+            if (role === 'leader') { roleScore = 0.5; roleText = 'Trưởng nhóm (+0.5đ)'; }
+            else if (role === 'member') { roleScore = 0.3; roleText = 'Thành viên (+0.3đ)'; }
+            else if (role === 'presenter') { roleScore = 0.2; roleText = 'Thuyết trình (+0.2đ)'; }
+            
+            const challengeScore = challenge * 0.1;
+            
+            document.getElementById('preview-role-impact').textContent = roleText;
+            document.getElementById('preview-challenge-impact').textContent = `+${challengeScore.toFixed(1)}đ`;
+
+            // Áp dụng điểm mới vào biểu đồ
+            const newImpacts = impactChart.data.labels.map(label => 0.1); // Reset base
+            
+            selectedSkills.forEach(skill => {
+                const index = impactChart.data.labels.findIndex(l => l.includes(skill.substring(0, 4))); // Tìm index gần đúng
+                if (index !== -1) {
+                    newImpacts[index] = roleScore + challengeScore;
+                }
+            });
+
+            impactChart.data.datasets[0].data = newImpacts;
+            impactChart.update();
+        }
+
+        document.getElementById('activity-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const activityName = document.getElementById('activity-name').value;
+            alert(`Hoạt động "${activityName}" đã được ghi nhận thành công! Điểm kỹ năng của bạn đã được cập nhật. Chuyển hướng về Dashboard.`);
+            window.location.href = 'dashboard.html';
+        });
+
+        // Khởi tạo khi DOM sẵn sàng
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeChart();
+            // Lắng nghe thay đổi trên các trường chính
+            document.getElementById('role').addEventListener('change', updateImpactPreview);
+            updateImpactPreview(); 
+        });
+    </script>
+
+</body>
+</html>
