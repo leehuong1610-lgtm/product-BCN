@@ -1,9 +1,6 @@
-/* ------------------------------------------------------------------- */
-/* CSS FINAL VERSION - GLASSMORPHISM & TOÀN BỘ DỰ ÁN */
-/* ------------------------------------------------------------------- */
 
 :root {
-    /* MÀU SẮC BRAND - SOFT PASTEL */
+   
     --color-primary: #5A189A; /* Tím Sâu (Grape) - Primary */
     --color-accent: #4F9AFF; /* Xanh Pastel - Dùng cho Gradient */
     --color-callout: #FFD700; /* Vàng Gold - CTA */
@@ -56,7 +53,6 @@ h1, h2, h3, h4 {
 }
 h2 { 
     font-size: 2.5em; 
-    /* Gradient cho H2 */
     background-image: linear-gradient(to right, var(--color-primary), var(--color-accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -79,7 +75,7 @@ h2 {
 }
 
 .btn-primary {
-    background: linear-gradient(to right, #6A3AB7, #8C82FF); /* Gradient cho Primary */
+    background: linear-gradient(to right, #6A3AB7, #8C82FF);
     color: var(--color-white);
     box-shadow: 0 5px 15px rgba(90, 24, 154, 0.4);
 }
@@ -89,7 +85,7 @@ h2 {
 }
 
 .btn-accent {
-    background-color: var(--color-callout); /* Vàng Gold */
+    background-color: var(--color-callout);
     color: var(--color-text-dark);
     box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
 }
@@ -193,7 +189,6 @@ input:focus, select:focus, textarea:focus {
 
 /* CONTENT BLOCKS */
 .chart-area, .activity-box, .report-content {
-    /* Áp dụng Glassmorphism cho khối nội dung chính */
     @extend .glass-box;
     padding: 40px;
 }
@@ -355,20 +350,17 @@ input:focus, select:focus, textarea:focus {
 /* --- BỔ SUNG CSS CHO ONBOARDING 2 CỘT --- */
 @media (max-width: 768px) {
     .auth-box {
-        /* Đặt lại cho Onboarding 2 cột trên mobile */
         max-width: 100%;
         width: 90%;
         flex-direction: column;
         padding: 0;
-        overflow: hidden; /* Quan trọng để bo góc đẹp */
+        overflow: hidden; 
     }
     .auth-box > div:first-child { 
-        /* Cột hình ảnh */
         border-radius: 20px 20px 0 0; 
         padding: 20px;
     }
     .auth-box > div:last-child {
-        /* Cột form */
         padding: 30px;
     }
 }
@@ -381,7 +373,6 @@ input:focus, select:focus, textarea:focus {
 .activity-table th, .activity-table td {
     padding: 10px;
     text-align: left;
-    /* Dùng border mỏng */
     border-bottom: 1px solid var(--color-background-muted);
     font-size: 0.9em;
 }
@@ -389,8 +380,6 @@ input:focus, select:focus, textarea:focus {
     background-color: var(--color-background-muted);
     color: var(--color-text-dark);
 }
-/* --- BỔ SUNG CSS CHO CÁC TRANG PHỤ KHÔNG CÓ TRONG LẦN TRƯỚC --- */
-
 /* Badge Page */
 .badge-grid {
     display: grid;
@@ -444,7 +433,6 @@ input:focus, select:focus, textarea:focus {
 /* --- BỔ SUNG CSS CHO REPORT PAGE --- */
 
 .report-content {
-    /* Áp dụng Glassmorphism cho khối nội dung chính */
     background: var(--glass-background);
     backdrop-filter: blur(15px);
     border: var(--glass-border);
@@ -464,7 +452,6 @@ input:focus, select:focus, textarea:focus {
 }
 
 .cv-prompt {
-    /* Khối Gợi ý CV */
     background-color: var(--color-background-muted);
     padding: 15px;
     border-radius: 8px;
