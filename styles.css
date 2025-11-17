@@ -1,4 +1,3 @@
-
 :root {
    
     --color-primary: #5A189A; /* Tím Sâu (Grape) - Primary */
@@ -72,6 +71,7 @@ h2 {
     align-items: center;
     gap: 10px;
     font-size: 1.1em;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -112,6 +112,7 @@ h2 {
     font-size: 1em;
     padding: 0;
     cursor: pointer;
+    text-decoration: none;
 }
 
 /* INPUTS */
@@ -130,6 +131,8 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(90, 24, 154, 0.1);
     outline: none;
 }
+.form-group { margin-bottom: 20px; }
+
 
 /* HEADER & NAVBAR */
 .header {
@@ -144,7 +147,7 @@ input:focus, select:focus, textarea:focus {
 .logo { font-family: var(--font-heading); font-size: 2em; font-weight: 700; color: var(--color-text-dark); }
 .logo-xion { color: var(--color-accent); }
 .main-nav { display: flex; gap: 30px; }
-.nav-item { font-family: var(--font-body); color: var(--color-text-medium); font-weight: 500; padding: 5px 0; position: relative; }
+.nav-item { font-family: var(--font-body); color: var(--color-text-medium); font-weight: 500; padding: 5px 0; position: relative; text-decoration: none; }
 .nav-item::after { content: ''; position: absolute; width: 0; height: 3px; bottom: -5px; left: 0; background-color: var(--color-primary); transition: width 0.3s ease; }
 .nav-item:hover::after { width: 100%; }
 
@@ -159,12 +162,23 @@ input:focus, select:focus, textarea:focus {
     padding: 30px;
 }
 
-/* AUTH LAYOUT */
-.auth-page { justify-content: center; align-items: center; }
+/* AUTH LAYOUT (CẢI THIỆN GIAO DIỆN) */
+.auth-page { 
+    justify-content: center; 
+    align-items: center; 
+    background: url(./placeholder_background.png) no-repeat center center / cover; /* Background giả lập */
+    padding: 50px 0;
+}
 .auth-box { 
-    @extend .glass-box;
+    background: var(--glass-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
     max-width: 450px;
     padding: 50px 40px;
+    text-align: center;
 }
 .auth-box h2 {
     font-size: 2.5em;
@@ -177,29 +191,60 @@ input:focus, select:focus, textarea:focus {
     color: var(--color-text-medium);
     margin-bottom: 30px;
 }
+.icon-lock {
+    font-size: 3em;
+    margin-bottom: 15px;
+    color: var(--color-callout);
+}
+.btn-submit-primary { padding: 12px 32px; border-radius: 10px; margin-top: 10px;}
+.auth-separator {
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+    color: var(--color-text-light);
+}
+.auth-separator::before, .auth-separator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: var(--border-color);
+}
+.auth-separator::before { left: 0; }
+.auth-separator::after { right: 0; }
+
 
 /* DASHBOARD LAYOUT */
 .dashboard-layout { display: flex; flex-grow: 1; }
-.sidebar { width: 250px; background-color: var(--color-primary); color: var(--color-white); padding: 20px; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); }
+.sidebar { width: 250px; background-color: var(--color-primary); color: var(--color-white); padding: 20px; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); flex-shrink: 0; }
 .sidebar .logo { font-family: var(--font-heading); font-size: 1.8em; font-weight: 700; margin-bottom: 40px; }
 .sidebar .logo-xion { color: var(--color-callout); }
-.sidebar nav a { display: block; color: var(--color-white); padding: 12px 15px; margin-bottom: 10px; border-radius: 10px; transition: background-color 0.3s; }
+.sidebar nav a { display: block; color: var(--color-white); padding: 12px 15px; margin-bottom: 10px; border-radius: 10px; transition: background-color 0.3s; text-decoration: none; }
 .sidebar nav a.active { background-color: #4F9AFF; }
 .main-content { flex-grow: 1; padding: 40px; background-color: var(--color-background-light); }
+.dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 
 /* CONTENT BLOCKS */
 .chart-area, .activity-box, .report-content {
-    @extend .glass-box;
-    padding: 40px;
+    background: var(--glass-background);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 20px;
+    padding: 30px;
 }
 .stat-card {
     background: var(--color-white);
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
 }
+.stat-card:hover { transform: translateY(-3px); }
 
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 40px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
 .feature-flex-container, .value-prop-flex-container { display: flex; gap: 30px; justify-content: space-between; margin-top: 30px; }
 .feature-card, .value-box { flex: 1; min-width: 280px; background-color: var(--color-background-muted); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
 
@@ -209,162 +254,8 @@ input:focus, select:focus, textarea:focus {
 
 /* FOOTER */
 .footer-modern { background-color: var(--color-background-muted); color: var(--color-text-medium); padding: 50px 0 20px 0; border-top: 1px solid var(--border-color); }
-.footer-content-simple { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 25px; }
 
-/* RESPONSIVE */
-@media (max-width: 992px) {
-    .dashboard-layout { flex-direction: column; }
-    .sidebar { width: 100%; text-align: center; padding-bottom: 0; }
-    .sidebar nav a { display: inline-block; margin-right: 15px; padding: 8px 15px; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .feature-flex-container, .value-prop-flex-container { flex-direction: column; gap: 30px; }
-}
-@media (max-width: 600px) {
-    .stats-grid { grid-template-columns: 1fr; }
-}
-/* --- BỔ SUNG CHO CÁC THẺ TRÊN LANDING PAGE --- */
-
-.hero-content-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr; 
-    gap: 60px;
-    align-items: center;
-}
-.hero-illustration-img {
-    background: var(--glass-background);
-    backdrop-filter: blur(10px);
-    border: var(--glass-border);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    padding: 30px;
-}
-
-.feature-card {
-    /* Áp dụng Glassmorphism/Soft Card cho thẻ tính năng */
-    background: var(--color-white);
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s;
-}
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-/* --- PHẦN BỔ SUNG CSS TRONG styles.css --- */
-
-/* Đảm bảo hero content grid có đủ gap và bo góc */
-.hero-content-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr; 
-    gap: 60px;
-    align-items: center;
-}
-/* Glassmorphism cho ảnh demo */
-.hero-illustration-img {
-    background: var(--glass-background);
-    backdrop-filter: blur(10px);
-    border: var(--glass-border);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    padding: 30px;
-    /* Styles phụ để hiển thị placeholder */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Thẻ tính năng (feature-card) - dùng cho section 3 của index */
-.feature-card {
-    background: var(--color-white);
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s;
-}
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Thẻ thống kê nhỏ (stat-card) */
-.stat-card {
-    background: var(--color-white);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}/* Đảm bảo các quy tắc dưới đây có trong styles.css */
-
-/* HEADER & NAVBAR */
-.header {
-    background-color: var(--color-white);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-/* HERO & ILLU */
-.hero-content-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr; 
-    gap: 60px;
-    align-items: center;
-}
-.hero-illustration-img {
-    /* Glassmorphism cho khối minh họa */
-    background: var(--glass-background);
-    backdrop-filter: blur(10px);
-    border: var(--glass-border);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-}
-
-/* FEATURE & TESTIMONIALS */
-.feature-flex-container {
-    display: flex;
-    gap: 30px;
-}
-.feature-card {
-    flex: 1;
-    min-width: 280px;
-    background: var(--color-white); /* Nền trắng */
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s;
-}
-.testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-.testimonial-card {
-    /* Glassmorphism cho Testimonial */
-    background: var(--glass-background);
-    backdrop-filter: blur(5px);
-    border: var(--glass-border);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    border-radius: 15px;
-    padding: 25px;
-}
-/* --- BỔ SUNG CSS CHO ONBOARDING 2 CỘT --- */
-@media (max-width: 768px) {
-    .auth-box {
-        max-width: 100%;
-        width: 90%;
-        flex-direction: column;
-        padding: 0;
-        overflow: hidden; 
-    }
-    .auth-box > div:first-child { 
-        border-radius: 20px 20px 0 0; 
-        padding: 20px;
-    }
-    .auth-box > div:last-child {
-        padding: 30px;
-    }
-}
-/* Thêm/sửa quy tắc cho BẢNG TRÊN DASHBOARD */
+/* Dashboard Tables & Lists */
 .activity-table {
     width: 100%;
     margin-top: 10px;
@@ -380,10 +271,42 @@ input:focus, select:focus, textarea:focus {
     background-color: var(--color-background-muted);
     color: var(--color-text-dark);
 }
+.history-list {
+    list-style: none;
+    padding: 0;
+}
+.history-item {
+    background: var(--color-white);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    border-left: 5px solid var(--color-primary);
+}
+.history-item h4 {
+    margin-bottom: 5px;
+    color: var(--color-text-dark);
+}
+.history-item p {
+    font-size: 0.9em;
+    color: var(--color-text-medium);
+}
+/* Setting Toggle Switch */
+.setting-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed var(--border-color); }
+.setting-item label:first-child { font-weight: 600; color: var(--color-text-dark); }
+.switch { position: relative; display: inline-block; width: 45px; height: 25px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; }
+.slider:before { position: absolute; content: ""; height: 17px; width: 17px; left: 4px; bottom: 4px; background-color: white; transition: .4s; }
+input:checked + .slider { background-color: var(--color-primary); }
+input:checked + .slider:before { transform: translateX(20px); }
+.slider.round { border-radius: 25px; }
+.slider.round:before { border-radius: 50%; }
+
 /* Badge Page */
 .badge-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     margin-top: 30px;
 }
@@ -409,29 +332,7 @@ input:focus, select:focus, textarea:focus {
     opacity: 0.5;
 }
 
-/* History & Goals Page (Simple List) */
-.history-list {
-    list-style: none;
-    padding: 0;
-}
-.history-item {
-    background: var(--color-white);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-    border-left: 5px solid var(--color-primary);
-}
-.history-item h4 {
-    margin-bottom: 5px;
-    color: var(--color-text-dark);
-}
-.history-item p {
-    font-size: 0.9em;
-    color: var(--color-text-medium);
-}
-/* --- BỔ SUNG CSS CHO REPORT PAGE --- */
-
+/* Report Page */
 .report-content {
     background: var(--glass-background);
     backdrop-filter: blur(15px);
@@ -439,7 +340,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: var(--glass-shadow);
     border-radius: 20px;
 }
-
 .skill-card-report {
     background-color: var(--color-white);
     padding: 20px;
@@ -447,13 +347,31 @@ input:focus, select:focus, textarea:focus {
     margin-bottom: 15px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
 }
-.skill-card-report h4 {
-    margin-bottom: 5px;
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1200px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-.cv-prompt {
-    background-color: var(--color-background-muted);
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
+@media (max-width: 992px) {
+    .dashboard-layout { flex-direction: column; }
+    .sidebar { width: 100%; text-align: center; padding-bottom: 0; }
+    .sidebar nav a { display: inline-block; margin-right: 15px; padding: 8px 15px; }
+    .main-content { padding: 20px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .hero-content-grid, .testimonial-grid { grid-template-columns: 1fr; }
+    .feature-flex-container, .value-prop-flex-container { flex-direction: column; gap: 30px; }
+    .report-content > div { grid-template-columns: 1fr !important; } /* Báo cáo 1 cột trên mobile */
+    .dashboard-content-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .dashboard-header { flex-direction: column; align-items: flex-start; }
+    .dashboard-header h1 { margin-bottom: 15px; }
+    .auth-box { max-width: 90%; padding: 30px 20px; }
+    .sidebar nav a { display: block; margin-right: 0; }
+    .navbar-container { flex-direction: column; gap: 10px; }
+    .main-nav { flex-direction: column; }
 }

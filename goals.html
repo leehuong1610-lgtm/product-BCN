@@ -3,45 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiến độ Mục tiêu - Future Xion</title>
+    <title data-translate="title_goals">Tiến độ Mục tiêu - Future Xion</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body onload="applyLanguageGoals()">
     
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">future<span class="logo-xion">Xion</span></div>
             <nav>
-                <a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
-                <a href="activity.html"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
-                <a href="report.html"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
-                <a href="settings.html"><i class="fas fa-cog"></i> Cài đặt</a>
-                <a href="auth.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                <a href="dashboard.html" data-translate="menu_dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="activity.html" data-translate="menu_activity"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
+                <a href="report.html" data-translate="menu_report"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
+                <a href="settings.html" data-translate="menu_settings"><i class="fas fa-cog"></i> Cài đặt</a>
+                <a href="auth.html" data-translate="menu_logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="dashboard-header"><h1>Tiến độ Mục tiêu Cá nhân</h1></div>
+            <div class="dashboard-header"><h1 data-translate="h1_goals">Tiến độ Mục tiêu Cá nhân</h1></div>
             <div class="glass-box" style="padding: 40px;">
-                <h3 style="color: var(--color-primary);">Mục tiêu Hiện tại: Tăng điểm Leadership lên 4.5</h3>
-                <p style="font-size: 1.2em; margin-bottom: 10px;">Tiến độ: 4.2 / 4.5</p>
+                <h3 data-translate="h3_current_goal" style="color: var(--color-primary);">Mục tiêu Hiện tại: Tăng điểm Leadership lên 4.5</h3>
+                <p data-translate="p_progress_detail" style="font-size: 1.2em; margin-bottom: 10px;">Tiến độ: 4.2 / 4.5</p>
                 <progress value="4.2" max="4.5" style="width: 100%; height: 20px; accent-color: var(--color-primary);"></progress>
                 
-                <h3 style="margin-top: 40px; color: var(--color-primary);">Lịch sử Tiến trình (Leadership Score)</h3>
+                <h3 data-translate="h3_history_title" style="margin-top: 40px; color: var(--color-primary);">Lịch sử Tiến trình (Leadership Score)</h3>
                 <ul class="history-list">
                     <li class="history-item" style="border-left: 5px solid var(--color-primary);">
-                        <h4>Điểm đạt được: 4.2</h4>
-                        <p>Hoạt động: Dự án cuối kỳ (Vai trò: Trưởng nhóm). Ngày: 12/2025</p>
+                        <h4 data-translate="history1_score">Điểm đạt được: 4.2</h4>
+                        <p data-translate="history1_detail">Hoạt động: Dự án cuối kỳ (Vai trò: Trưởng nhóm). Ngày: 12/2025</p>
                     </li>
                      <li class="history-item" style="border-left: 5px solid var(--color-primary);">
-                        <h4>Điểm đạt được: 3.8</h4>
-                        <p>Hoạt động: Tổ chức sự kiện CLB. Ngày: 10/2025</p>
+                        <h4 data-translate="history2_score">Điểm đạt được: 3.8</h4>
+                        <p data-translate="history2_detail">Hoạt động: Tổ chức sự kiện CLB. Ngày: 10/2025</p>
                     </li>
                 </ul>
-                <p style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]</p>
+                <p data-translate="p_goals_footer" style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]</p>
             </div>
         </main>
     </div>
+    
+    <script>
+        const GoalsTranslations = {
+            vi: {
+                title_goals: "Tiến độ Mục tiêu - Future Xion", h1_goals: "Tiến độ Mục tiêu Cá nhân",
+                menu_dashboard: "Dashboard", menu_activity: "Ghi nhận Hoạt động", menu_report: "Hồ sơ Kỹ năng (CV)", menu_settings: "Cài đặt", menu_logout: "Đăng xuất",
+                h3_current_goal: "Mục tiêu Hiện tại: Tăng điểm Leadership lên 4.5", p_progress_detail: "Tiến độ: 4.2 / 4.5",
+                h3_history_title: "Lịch sử Tiến trình (Leadership Score)",
+                history1_score: "Điểm đạt được: 4.2", history1_detail: "Hoạt động: Dự án cuối kỳ (Vai trò: Trưởng nhóm). Ngày: 12/2025",
+                history2_score: "Điểm đạt được: 3.8", history2_detail: "Hoạt động: Tổ chức sự kiện CLB. Ngày: 10/2025",
+                p_goals_footer: "[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]"
+            },
+            en: {
+                title_goals: "Goal Progress - Future Xion", h1_goals: "Personal Goal Progress",
+                menu_dashboard: "Dashboard", menu_activity: "Log Activity", menu_report: "Skill Profile (CV)", menu_settings: "Settings", menu_logout: "Logout",
+                h3_current_goal: "Current Goal: Increase Leadership score to 4.5", p_progress_detail: "Progress: 4.2 / 4.5",
+                h3_history_title: "Progress History (Leadership Score)",
+                history1_score: "Score Achieved: 4.2", history1_detail: "Activity: Final Project (Role: Leader). Date: 12/2025",
+                history2_score: "Score Achieved: 3.8", history2_detail: "Activity: Organizing Club Event. Date: 10/2025",
+                p_goals_footer: "[This link works, proving the data history flow!]"
+            }
+        };
+
+        function applyLanguageGoals() {
+            const currentLang = localStorage.getItem('language') || 'vi';
+            document.title = GoalsTranslations[currentLang].title_goals;
+            const t = GoalsTranslations[currentLang];
+            
+            // Cập nhật tất cả các phần tử có data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (t[key]) {
+                    if (key.includes('menu_')) {
+                        // Xử lý menu sidebar
+                        const icon = element.querySelector('i');
+                        element.innerHTML = icon.outerHTML + ' ' + t[key];
+                    } else {
+                        element.textContent = t[key];
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', applyLanguageGoals);
+    </script>
 </body>
 </html>

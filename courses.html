@@ -3,45 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khóa học Khuyến nghị - Future Xion</title>
+    <title data-translate="title_courses">Khóa học Khuyến nghị - Future Xion</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body onload="applyLanguageCourses()">
     
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">future<span class="logo-xion">Xion</span></div>
             <nav>
-                <a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
-                <a href="activity.html"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
-                <a href="report.html"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
-                <a href="settings.html"><i class="fas fa-cog"></i> Cài đặt</a>
-                <a href="auth.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                <a href="dashboard.html" data-translate="menu_dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="activity.html" data-translate="menu_activity"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
+                <a href="report.html" data-translate="menu_report"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
+                <a href="settings.html" data-translate="menu_settings"><i class="fas fa-cog"></i> Cài đặt</a>
+                <a href="auth.html" data-translate="menu_logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="dashboard-header"><h1>Khóa học Khuyến nghị</h1></div>
+            <div class="dashboard-header"><h1 data-translate="h1_courses">Khóa học Khuyến nghị</h1></div>
             <div class="glass-box">
-                <p style="font-size: 1.1em; color: var(--color-text-dark);">
+                <p data-translate="p_course_intro" style="font-size: 1.1em; color: var(--color-text-dark);">
                     Điểm Tư duy Phản biện của bạn đang thấp hơn mức yêu cầu (3.5). Đây là các gợi ý để cải thiện.
                 </p>
                 <ul class="history-list" style="margin-top: 20px;">
                     <li class="history-item" style="border-left: 5px solid var(--color-accent);">
-                        <h4>Khóa học Tư duy Phản biện Cơ bản (Coursera Mock)</h4>
-                        <p>Nền tảng: Coursera. Thời lượng: 4 tuần. **Hành động:** Bắt đầu ngay để tăng điểm.</p>
-                        <a href="#" class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9em;">Xem Khóa học</a>
+                        <h4 data-translate="course1_title">Khóa học Tư duy Phản biện Cơ bản (Coursera Mock)</h4>
+                        <p data-translate="course1_detail">Nền tảng: Coursera. Thời lượng: 4 tuần. **Hành động:** Bắt đầu ngay để tăng điểm.</p>
+                        <a href="#" class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9em;" data-translate="cta_view_course">Xem Khóa học</a>
                     </li>
                     <li class="history-item" style="border-left: 5px solid var(--color-accent);">
-                        <h4>Ebook: 10 Case Study Phân tích</h4>
-                        <p>Nền tảng: Future Xion. **Hành động:** Ghi nhận bài tập trong tuần này để tích lũy XP.</p>
-                         <a href="#" class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9em;">Tải tài liệu</a>
+                        <h4 data-translate="course2_title">Ebook: 10 Case Study Phân tích</h4>
+                        <p data-translate="course2_detail">Nền tảng: Future Xion. **Hành động:** Ghi nhận bài tập trong tuần này để tích lũy XP.</p>
+                         <a href="#" class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9em;" data-translate="cta_download">Tải tài liệu</a>
                     </li>
                 </ul>
-                <p style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng Khuyến nghị Hành động!]</p>
+                <p data-translate="p_course_footer" style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng Khuyến nghị Hành động!]</p>
             </div>
         </main>
     </div>
+    
+    <script>
+        const CoursesTranslations = {
+            vi: {
+                title_courses: "Khóa học Khuyến nghị - Future Xion", h1_courses: "Khóa học Khuyến nghị",
+                menu_dashboard: "Dashboard", menu_activity: "Ghi nhận Hoạt động", menu_report: "Hồ sơ Kỹ năng (CV)", menu_settings: "Cài đặt", menu_logout: "Đăng xuất",
+                p_course_intro: "Điểm Tư duy Phản biện của bạn đang thấp hơn mức yêu cầu (3.5). Đây là các gợi ý để cải thiện.",
+                course1_title: "Khóa học Tư duy Phản biện Cơ bản (Coursera Mock)", course1_detail: "Nền tảng: Coursera. Thời lượng: 4 tuần. **Hành động:** Bắt đầu ngay để tăng điểm.",
+                cta_view_course: "Xem Khóa học", course2_title: "Ebook: 10 Case Study Phân tích",
+                course2_detail: "Nền tảng: Future Xion. **Hành động:** Ghi nhận bài tập trong tuần này để tích lũy XP.",
+                cta_download: "Tải tài liệu", p_course_footer: "[Liên kết này hoạt động, chứng minh luồng Khuyến nghị Hành động!]"
+            },
+            en: {
+                title_courses: "Recommended Courses - Future Xion", h1_courses: "Recommended Courses",
+                menu_dashboard: "Dashboard", menu_activity: "Log Activity", menu_report: "Skill Profile (CV)", menu_settings: "Settings", menu_logout: "Logout",
+                p_course_intro: "Your Critical Thinking score is below the required level (3.5). Here are suggestions for improvement.",
+                course1_title: "Basic Critical Thinking Course (Coursera Mock)", course1_detail: "Platform: Coursera. Duration: 4 weeks. **Action:** Start immediately to boost your score.",
+                cta_view_course: "View Course", course2_title: "Ebook: 10 Analysis Case Studies",
+                course2_detail: "Platform: Future Xion. **Action:** Log assignments this week to earn XP.",
+                cta_download: "Download Material", p_course_footer: "[This link works, proving the action recommendation flow!]"
+            }
+        };
+
+        function applyLanguageCourses() {
+            const currentLang = localStorage.getItem('language') || 'vi';
+            document.title = CoursesTranslations[currentLang].title_courses;
+            const t = CoursesTranslations[currentLang];
+            
+            // Cập nhật tất cả các phần tử có data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (t[key]) {
+                    if (key.includes('cta_')) {
+                        // Giữ lại icon nếu có
+                        const icon = element.querySelector('i');
+                        element.textContent = t[key];
+                        if (icon) element.prepend(icon);
+                    } else if (key.includes('menu_')) {
+                        // Xử lý menu sidebar
+                        const icon = element.querySelector('i');
+                        element.innerHTML = icon.outerHTML + ' ' + t[key];
+                    } else {
+                        element.innerHTML = t[key];
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', applyLanguageCourses);
+    </script>
 </body>
 </html>

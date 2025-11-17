@@ -3,44 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch sử Hoạt động - Future Xion</title>
+    <title data-translate="title_history">Lịch sử Hoạt động - Future Xion</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body onload="applyLanguageHistory()">
     
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">future<span class="logo-xion">Xion</span></div>
             <nav>
-                <a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a>
-                <a href="activity.html"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
-                <a href="report.html"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
-                <a href="settings.html"><i class="fas fa-cog"></i> Cài đặt</a>
-                <a href="auth.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                <a href="dashboard.html" data-translate="menu_dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="activity.html" data-translate="menu_activity"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
+                <a href="report.html" data-translate="menu_report"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
+                <a href="settings.html" data-translate="menu_settings"><i class="fas fa-cog"></i> Cài đặt</a>
+                <a href="auth.html" data-translate="menu_logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="dashboard-header"><h1>Lịch sử Hoạt động Chi tiết</h1></div>
+            <div class="dashboard-header"><h1 data-translate="h1_history">Lịch sử Hoạt động Chi tiết</h1></div>
             <div class="glass-box">
                 <ul class="history-list">
                     <li class="history-item">
-                        <h4>Dự án Green Campus (Trưởng nhóm)</h4>
-                        <p style="font-weight: 600;">Kỹ năng: Lãnh đạo, Giải quyết Vấn đề. Điểm tác động: 5/5</p>
-                        <p>Narrative: Đã dẫn dắt nhóm 5 người, hoàn thành dự án đúng hạn, vượt mục tiêu 10%. Rất tốt để dùng trong CV.</p>
-                        <a href="activity.html" class="btn-link" style="color: var(--color-accent);">Sửa/Cập nhật thêm chi tiết</a>
+                        <h4 data-translate="item1_title">Dự án Green Campus (Trưởng nhóm)</h4>
+                        <p data-translate="item1_skills" style="font-weight: 600;">Kỹ năng: Lãnh đạo, Giải quyết Vấn đề. Điểm tác động: 5/5</p>
+                        <p data-translate="item1_narrative">Narrative: Đã dẫn dắt nhóm 5 người, hoàn thành dự án đúng hạn, vượt mục tiêu 10%. Rất tốt để dùng trong CV.</p>
+                        <a href="activity.html" class="btn-link" style="color: var(--color-accent);" data-translate="cta_edit_detail">Sửa/Cập nhật thêm chi tiết</a>
                     </li>
                     <li class="history-item">
-                        <h4>Khóa học Communication Skills</h4>
-                        <p style="font-weight: 600;">Kỹ năng: Giao tiếp, Tư duy Phản biện. Điểm tác động: 3/5</p>
-                        <p>Narrative: Hoàn thành 10 module thuyết trình, vượt qua bài kiểm tra cuối khóa.</p>
-                        <a href="activity.html" class="btn-link" style="color: var(--color-accent);">Sửa/Cập nhật thêm chi tiết</a>
+                        <h4 data-translate="item2_title">Khóa học Communication Skills</h4>
+                        <p data-translate="item2_skills" style="font-weight: 600;">Kỹ năng: Giao tiếp, Tư duy Phản biện. Điểm tác động: 3/5</p>
+                        <p data-translate="item2_narrative">Narrative: Hoàn thành 10 module thuyết trình, vượt qua bài kiểm tra cuối khóa.</p>
+                        <a href="activity.html" class="btn-link" style="color: var(--color-accent);" data-translate="cta_edit_detail">Sửa/Cập nhật thêm chi tiết</a>
                     </li>
                 </ul>
-                <p style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]</p>
+                <p data-translate="p_history_footer" style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]</p>
             </div>
         </main>
     </div>
+    
+    <script>
+        const HistoryTranslations = {
+            vi: {
+                title_history: "Lịch sử Hoạt động - Future Xion", h1_history: "Lịch sử Hoạt động Chi tiết",
+                menu_dashboard: "Dashboard", menu_activity: "Ghi nhận Hoạt động", menu_report: "Hồ sơ Kỹ năng (CV)", menu_settings: "Cài đặt", menu_logout: "Đăng xuất",
+                item1_title: "Dự án Green Campus (Trưởng nhóm)", item1_skills: "Kỹ năng: Lãnh đạo, Giải quyết Vấn đề. Điểm tác động: 5/5",
+                item1_narrative: "Narrative: Đã dẫn dắt nhóm 5 người, hoàn thành dự án đúng hạn, vượt mục tiêu 10%. Rất tốt để dùng trong CV.",
+                item2_title: "Khóa học Communication Skills", item2_skills: "Kỹ năng: Giao tiếp, Tư duy Phản biện. Điểm tác động: 3/5",
+                item2_narrative: "Narrative: Hoàn thành 10 module thuyết trình, vượt qua bài kiểm tra cuối khóa.",
+                cta_edit_detail: "Sửa/Cập nhật thêm chi tiết", p_history_footer: "[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]"
+            },
+            en: {
+                title_history: "Activity History - Future Xion", h1_history: "Detailed Activity History",
+                menu_dashboard: "Dashboard", menu_activity: "Log Activity", menu_report: "Skill Profile (CV)", menu_settings: "Settings", menu_logout: "Logout",
+                item1_title: "Green Campus Project (Leader)", item1_skills: "Skills: Leadership, Problem Solving. Impact Score: 5/5",
+                item1_narrative: "Narrative: Led a team of 5, completed the project on time, exceeded targets by 10%. Excellent for CV use.",
+                item2_title: "Communication Skills Course", item2_skills: "Skills: Communication, Critical Thinking. Impact Score: 3/5",
+                item2_narrative: "Narrative: Completed 10 presentation modules, passed final exam.",
+                cta_edit_detail: "Edit/Update Details", p_history_footer: "[This link works, proving the data history flow!]"
+            }
+        };
+
+        function applyLanguageHistory() {
+            const currentLang = localStorage.getItem('language') || 'vi';
+            document.title = HistoryTranslations[currentLang].title_history;
+            const t = HistoryTranslations[currentLang];
+            
+            // Cập nhật tất cả các phần tử có data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (t[key]) {
+                    if (key.includes('cta_')) {
+                        // Giữ lại icon nếu có
+                        const icon = element.querySelector('i');
+                        element.textContent = t[key];
+                        if (icon) element.prepend(icon);
+                    } else if (key.includes('menu_')) {
+                        // Xử lý menu sidebar
+                        const icon = element.querySelector('i');
+                        element.innerHTML = icon.outerHTML + ' ' + t[key];
+                    } else {
+                        element.textContent = t[key];
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', applyLanguageHistory);
+    </script>
 </body>
 </html>

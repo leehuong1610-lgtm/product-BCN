@@ -22,49 +22,114 @@
         </aside>
 
         <main class="main-content">
-    <div class="dashboard-header">
-        <h1>Cài đặt Hệ thống</h1>
-    </div>
+            <div class="dashboard-header">
+                <h1>Cài đặt Hệ thống</h1>
+            </div>
 
-    <div class="activity-box glass-box">
-        <h2>1. Tích hợp Dữ liệu & Tính năng (Tương tác)</h2>
-        <p style="margin-bottom: 20px;">Quản lý các tích hợp tự động và tính năng Premium.</p>
+            <div class="activity-box glass-box">
+                
+                <h2 style="font-size: 1.8em; margin-bottom: 25px;">1. Tùy chọn Chung</h2>
+                
+                <!-- CHỨC NĂNG CHUYỂN ĐỔI NGÔN NGỮ -->
+                <div class="setting-item">
+                    <label id="label-language">Ngôn ngữ Giao diện</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="language-selector" onchange="changeLanguage(this.value)" style="width: 150px; padding: 8px;">
+                            <option value="vi" selected>Tiếng Việt</option>
+                            <option value="en">English</option>
+                        </select>
+                        <i class="fas fa-globe" style="color: var(--color-primary);"></i>
+                    </div>
+                </div>
 
-        <div class="setting-item">
-            <label>Hiển thị Mức Yêu cầu Ngành (Demand Benchmark)</label>
-            <label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>
-        </div>
-        <div class="setting-item">
-            <label>Tự động gửi yêu cầu xác nhận email Giám sát</label>
-            <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-        </div>
+                <div class="setting-item">
+                    <label id="label-benchmark">Hiển thị Mức Yêu cầu Ngành (Demand Benchmark)</label>
+                    <label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>
+                </div>
+                <div class="setting-item">
+                    <label id="label-supervisor">Tự động gửi yêu cầu xác nhận email Giám sát</label>
+                    <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                </div>
 
-        <h3 style="margin-top: 40px; color: var(--color-primary);">2. Kết nối Nguồn ngoài (Future Vision)</h3>
-        <p style="margin-bottom: 15px;">Kết nối để tự động hóa việc ghi nhận hoạt động.</p>
-        
-        <div style="display: flex; flex-direction: column; gap: 15px;">
-            <button class="btn btn-primary" style="justify-content: left; box-shadow: none; background-color: var(--color-background-muted); color: var(--color-text-dark);">
-                <i class="fab fa-google" style="color: var(--color-primary); margin-right: 10px;"></i> Tích hợp Google Classroom (Mock)
-            </button>
-            <button class="btn btn-primary" style="justify-content: left; box-shadow: none; background-color: var(--color-background-muted); color: var(--color-text-dark);">
-                <i class="fab fa-linkedin" style="color: var(--color-primary); margin-right: 10px;"></i> Đồng bộ Khóa học LinkedIn (Mock)
-            </button>
-        </div>
-    </div>
-</main>
-
-<style>
-/* CSS cho Toggle Switch (Áp dụng cho settings.html) */
-.switch { position: relative; display: inline-block; width: 45px; height: 25px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; }
-.slider:before { position: absolute; content: ""; height: 17px; width: 17px; left: 4px; bottom: 4px; background-color: white; transition: .4s; }
-input:checked + .slider { background-color: var(--color-primary); }
-input:checked + .slider:before { transform: translateX(20px); }
-.slider.round { border-radius: 25px; }
-.slider.round:before { border-radius: 50%; }
-</style>
+                <h3 id="heading-integration" style="margin-top: 40px; color: var(--color-primary);">2. Kết nối Nguồn ngoài (Future Vision)</h3>
+                <p id="p-integration" style="margin-bottom: 15px;">Kết nối để tự động hóa việc ghi nhận hoạt động.</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <button class="btn btn-primary" style="justify-content: left; box-shadow: none; background-color: var(--color-background-muted); color: var(--color-text-dark);">
+                        <i class="fab fa-google" style="color: #DB4437; margin-right: 10px;"></i> Tích hợp Google Classroom (Mock)
+                    </button>
+                    <button class="btn btn-primary" style="justify-content: left; box-shadow: none; background-color: var(--color-background-muted); color: var(--color-text-dark);">
+                        <i class="fab fa-linkedin" style="color: #0077B5; margin-right: 10px;"></i> Đồng bộ Khóa học LinkedIn (Mock)
+                    </button>
+                </div>
+            </div>
         </main>
     </div>
+
+    <style>
+    /* CSS cho Toggle Switch (Áp dụng cho settings.html) */
+    .switch { position: relative; display: inline-block; width: 45px; height: 25px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; }
+    .slider:before { position: absolute; content: ""; height: 17px; width: 17px; left: 4px; bottom: 4px; background-color: white; transition: .4s; }
+    input:checked + .slider { background-color: var(--color-primary); }
+    input:checked + .slider:before { transform: translateX(20px); }
+    .slider.round { border-radius: 25px; }
+    .slider.round:before { border-radius: 50%; }
+    </style>
+    
+    <script>
+        // BẢNG DỊCH cho Settings
+        const SettingsTranslations = {
+             vi: { 
+                    title: "Cài đặt - Future Xion", h1: "Cài đặt Hệ thống", h2: "1. Tùy chọn Chung", 
+                    h3: "2. Kết nối Nguồn ngoài (Future Vision)", p_int: "Kết nối để tự động hóa việc ghi nhận hoạt động.",
+                    l_lang: "Ngôn ngữ Giao diện", l_bench: "Hiển thị Mức Yêu cầu Ngành (Demand Benchmark)", 
+                    l_super: "Tự động gửi yêu cầu xác nhận email Giám sát" 
+                },
+                en: { 
+                    title: "Settings - Future Xion", h1: "System Settings", h2: "1. General Options", 
+                    h3: "2. External Source Integration (Future Vision)", p_int: "Connect to automate activity logging.",
+                    l_lang: "Interface Language", l_bench: "Show Industry Demand Benchmark", 
+                    l_super: "Automatically send supervisor email confirmation requests" 
+                }
+        };
+
+        // MOCKUP LOGIC ĐỔI NGÔN NGỮ - LƯU VÀ TẢI LẠI TRANG
+        function changeLanguage(lang) {
+            // 1. Lưu trạng thái ngôn ngữ vào LocalStorage
+            localStorage.setItem('language', lang);
+            
+            // 2. Cập nhật giao diện (chỉ cần cập nhật nội dung, không cần alert)
+            applyLanguageSettings(lang);
+
+            // 3. (Mô phỏng) Tải lại toàn bộ ứng dụng để áp dụng ngôn ngữ cho các trang khác
+            // window.location.reload(); 
+            // KHÔNG dùng reload để tránh lỗi, chỉ cập nhật nội dung trên trang hiện tại.
+        }
+        
+        function applyLanguageSettings(lang) {
+             const currentLang = lang || localStorage.getItem('language') || 'vi';
+             const t = SettingsTranslations[currentLang];
+            
+            // Cập nhật các nhãn chính trên trang
+            document.title = t.title;
+            document.querySelector('h1').textContent = t.h1;
+            document.querySelector('.activity-box h2').textContent = t.h2;
+            document.getElementById('heading-integration').textContent = t.h3;
+            document.getElementById('p-integration').textContent = t.p_int;
+            document.getElementById('label-language').textContent = t.l_lang;
+            document.getElementById('label-benchmark').textContent = t.l_bench;
+            document.getElementById('label-supervisor').textContent = t.l_super;
+            document.getElementById('language-selector').value = currentLang; // Đảm bảo selector đúng
+        }
+
+        // Khôi phục trạng thái ban đầu khi tải trang
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('language') || 'vi';
+            document.getElementById('language-selector').value = savedLang;
+            applyLanguageSettings(savedLang);
+        });
+    </script>
 </body>
 </html>
