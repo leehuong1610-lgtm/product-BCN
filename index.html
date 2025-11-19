@@ -3,25 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="title_index">Future Xion - Hệ thống Ghi nhận & Đo lường Kỹ năng Mềm</title>
+    <title>Future Xion - Hệ thống Ghi nhận & Đo lường Kỹ năng Mềm</title>
     <link rel="stylesheet" href="styles.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS cá nhân hóa theo yêu cầu của bạn */
+        :root {
+            --color-primary: #5A189A; /* Purple */
+            --color-accent: #4F9AFF; /* Blue */
+            --color-callout: #FFD700; /* Gold/Yellow */
+            --glass-background: rgba(255, 255, 255, 0.6);
+            --color-white: #ffffff;
+            --color-background-light: #f7f7f7;
+            --color-background-muted: #ececec;
+            --color-text-medium: #555;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .glass-box {
+            background: var(--glass-background);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+        
+        .header {
+            background-color: var(--color-white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .logo-xion {
+            color: var(--color-accent);
+        }
+
+        .main-nav a {
+            color: #333;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover {
+            color: var(--color-primary);
+        }
+
+        /* CTAs */
+        .btn {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background-color: #4B1480; /* Darker primary */
+        }
+        
+        .btn-accent {
+            background-color: var(--color-accent);
+            color: var(--color-white);
+        }
+
+        .btn-accent:hover {
+            background-color: #3f7de0; /* Darker accent */
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+       
+        .hero-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            align-items: center;
+        }
+
+        .hero-cta-group {
+            display: flex;
+        }
+
+        .feature-flex-container, .value-prop-flex-container, .testimonial-grid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .feature-card, .value-box, .testimonial-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .step-item {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* CSS MỚI: Hover cho nút Sign In */
+        .btn-signin:hover {
+            /* Sử dụng !important để ghi đè inline style của background-color */
+            background-color: #360962 !important; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body onload="applyLanguage(true)">
+<body>
 
     <header class="header">
         <div class="container navbar-container">
-            <div class="logo">future<span class="logo-xion">Xion</span></div>
+            <div class="logo">Future<span class="logo-xion">Xion</span></div>
             <nav class="main-nav">
-                <a href="#features" class="nav-item" data-translate="nav_features">Tính năng</a>
-                <a href="#benefits" class="nav-item" data-translate="nav_benefits">Lợi ích</a>
-                <a href="#process" class="nav-item" data-translate="nav_process">Quy trình</a>
-                <a href="#testimonials" class="nav-item" data-translate="nav_testimonials">Đánh giá</a>
-            </nav>
+                <a href="#features" class="nav-item">Tính năng</a>
+                <a href="#benefits" class="nav-item">Lợi ích</a>
+                <a href="#process" class="nav-item">Quy trình</a>
+                <a href="#testimonials" class="nav-item">Đánh giá</a>
+                <a href="#faq" class="nav-item">FAQ</a> </nav>
             <div class="nav-actions">
-                <a href="auth.html" class="btn btn-signin" style="background-color: var(--color-primary); color: white; padding: 10px 20px;" data-translate="nav_signin">Sign In</a>
+                <a href="auth.html" class="btn btn-signin" style="background-color: var(--color-primary); color: white; padding: 10px 20px;">Đăng nhập</a>
             </div>
         </div>
     </header>
@@ -29,45 +175,44 @@
     <section class="hero-section" style="background-color: var(--color-background-light); padding: 100px 0;">
         <div class="container hero-content-grid" style="gap: 60px;">
             <div class="hero-text">
-                <h1 style="font-size: 3.5em; margin-bottom: 25px;" data-translate="hero_heading">Biến **Kinh nghiệm Rải rác** thành Hồ sơ Kỹ năng Chuyên nghiệp</h1>
-                <p style="font-size: 1.2em; color: var(--color-text-medium); margin-bottom: 40px;" data-translate="hero_subtitle">
-                    **Mục đích:** Nền tảng giúp sinh viên **ghi nhận, đo lường khách quan** các kỹ năng mềm (Lãnh đạo, Giao tiếp) để tối ưu CV và phỏng vấn.
+                <h1 style="font-size: 3.5em; margin-bottom: 25px;">Biến kinh nghiệm rải rác thành hồ sơ kỹ năng chuyên nghiệp</h1>
+                <p style="font-size: 1.2em; color: var(--color-text-medium); margin-bottom: 40px;">
+                    Nền tảng giúp sinh viên ghi nhận, đo lường khách quan các kỹ năng mềm để tối ưu CV và phỏng vấn.
                 </p>
                 <div class="hero-cta-group" style="gap: 20px;">
-                    <a href="auth.html" class="btn btn-primary btn-large" style="padding: 18px 40px; font-size: 1.2em;" data-translate="hero_cta_signup">Tạo hồ sơ miễn phí <i class="fas fa-arrow-right"></i></a>
-                    <a href="dashboard.html" class="btn btn-secondary btn-large" style="padding: 18px 40px; font-size: 1.2em;" data-translate="hero_cta_demo">Xem Dashboard Demo</a>
+                    <a href="auth.html#register" class="btn btn-primary btn-large" style="padding: 18px 40px; font-size: 1.2em;">Tạo hồ sơ miễn phí <i class="fas fa-arrow-right"></i></a>
+                    <a href="dashboard_demo.html" class="btn btn-secondary btn-large" style="padding: 18px 40px; font-size: 1.2em;">Xem Dashboard Demo</a>
                 </div>
             </div>
             <div class="hero-illustration">
                 <div class="hero-illustration-img glass-box" style="height: 400px; padding: 30px; display: flex; justify-content: center; align-items: center;">
-                    <p style="color: var(--color-text-medium);" data-translate="hero_illustration_text">[Hình minh họa Chính (Vector)]</p>
+                    <p style="color: var(--color-text-medium);">[Hình minh họa Chính (Vector)]</p>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Các Section khác cũng sẽ được cập nhật tương tự... -->
-    
+
     <section id="features" style="padding: 80px 0; background-color: var(--color-background-muted);">
         <div class="container" style="text-align: center;">
-            <h2 style="margin-bottom: 50px;" data-translate="features_h2">Chức năng Cốt lõi của Web</h2>
+            <h2 style="margin-bottom: 50px;">Các chức năng chính</h2>
             <div class="feature-flex-container" style="gap: 30px; margin-top: 40px;">
                 
-                <div class="feature-card glass-box">
+                <div class="feature-card glass-box stat-card">
                     <div style="font-size: 2.5em; color: var(--color-primary); margin-bottom: 15px;"><i class="fas fa-clipboard-list"></i></div>
-                    <h3 data-translate="feature1_title" style="font-size: 1.6em;">Ghi nhận Dữ liệu</h3>
-                    <p data-translate="feature1_desc" style="font-size: 0.95em;">Chuyển đổi kinh nghiệm rải rác (CLB, dự án) thành dữ liệu có cấu trúc để đo lường.</p>
+                    <h3 style="font-size: 1.6em;">Ghi nhận dữ liệu</h3>
+                    <p style="font-size: 0.95em;">Chuyển đổi kinh nghiệm rải rác (CLB, dự án) thành dữ liệu có cấu trúc để đo lường.</p>
                 </div>
 
-                <div class="feature-card glass-box">
-                    <div style="font-size: 2.5em; color: var(--color-accent); margin-bottom: 15px;"><i class="fas fa-chart-radar"></i></div>
-                    <h3 data-translate="feature2_title" style="font-size: 1.6em;">Đo lường Khách quan</h3>
-                    <p data-translate="feature2_desc" style="font-size: 0.95em;">Sử dụng Biểu đồ Radar để trực quan hóa mức độ phát triển của từng kỹ năng (Điểm số 1-5).</p>
+                <div class="feature-card glass-box stat-card">
+                    <div style="font-size: 2.5em; color: var(--color-accent); margin-bottom: 15px;"><i class="fas fa-chart-radar"></i></div> 
+                    <h3 style="font-size: 1.6em;">Đo lường khách quan</h3>
+                    <p style="font-size: 0.95em;">Sử dụng biểu đồ Radar để trực quan hóa mức độ phát triển của từng kỹ năng (Điểm số 1-5).</p>
                 </div>
 
-                <div class="feature-card glass-box">
+                <div class="feature-card glass-box stat-card">
                     <div style="font-size: 2.5em; color: var(--color-primary); margin-bottom: 15px;"><i class="fas fa-file-alt"></i></div>
-                    <h3 data-translate="feature3_title" style="font-size: 1.6em;">Hồ sơ Ứng tuyển</h3>
-                    <p data-translate="feature3_desc" style="font-size: 0.95em;">Cung cấp gợi ý mô tả kỹ năng cho CV và so sánh với điểm chuẩn thị trường lao động.</p>
+                    <h3 style="font-size: 1.6em;">Hồ sơ ứng tuyển</h3>
+                    <p style="font-size: 0.95em;">Cung cấp gợi ý mô tả kỹ năng cho CV và so sánh với điểm chuẩn thị trường lao động.</p>
                 </div>
             </div>
         </div>
@@ -75,48 +220,48 @@
 
     <section id="benefits" style="padding: 80px 0; background-color: var(--color-white);">
         <div class="container">
-            <h2 data-translate="benefits_h2" style="text-align: center; margin-bottom: 50px;">Lợi ích Tuyệt đối (Value Proposition)</h2>
+            <h2 style="text-align: center; margin-bottom: 50px;">Lợi ích tuyệt đối</h2>
             
             <div class="value-prop-flex-container" style="gap: 30px; text-align: center;">
                 <div class="value-box stat-card">
                     <i class="fas fa-medal value-icon" style="color: var(--color-accent); font-size: 2.5em;"></i>
-                    <h3 data-translate="benefit1_title" style="font-size: 1.4em;">Xác định Điểm Mạnh</h3>
-                    <p data-translate="benefit1_desc" style="font-size: 0.9em;">Biết chính xác nên nhấn mạnh kỹ năng nào trong các vòng phỏng vấn.</p>
+                    <h3 style="font-size: 1.4em;">Xác định điểm Mạnh</h3>
+                    <p style="font-size: 0.9em;">Biết chính xác nên nhấn mạnh kỹ năng nào trong các vòng phỏng vấn.</p>
                 </div>
                 <div class="value-box stat-card">
                     <i class="fas fa-handshake value-icon" style="color: var(--color-accent); font-size: 2.5em;"></i>
-                    <h3 data-translate="benefit2_title" style="font-size: 1.4em;">Chứng minh STAR</h3>
-                    <p data-translate="benefit2_desc" style="font-size: 0.9em;">Có dữ liệu, hoạt động cụ thể để trả lời các câu hỏi tình huống (phương pháp STAR).</p>
+                    <h3 style="font-size: 1.4em;">Chứng minh STAR</h3>
+                    <p style="font-size: 0.9em;">Có dữ liệu, hoạt động cụ thể để trả lời các câu hỏi tình huống (phương pháp STAR).</p>
                 </div>
                 <div class="value-box stat-card">
                     <i class="fas fa-chart-bar value-icon" style="color: var(--color-accent); font-size: 2.5em;"></i>
-                    <h3 data-translate="benefit3_title" style="font-size: 1.4em;">Lộ trình Cải thiện</h3>
-                    <p data-translate="benefit3_desc" style="font-size: 0.9em;">Nhận khuyến nghị hành động cụ thể cho kỹ năng có điểm số thấp nhất.</p>
+                    <h3 style="font-size: 1.4em;">Lộ trình cải thiện</h3>
+                    <p style="font-size: 0.9em;">Nhận khuyến nghị hành động cụ thể cho kỹ năng có điểm số thấp nhất.</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section id="process" style="padding: 80px 0; background-color: var(--color-background-muted);">
         <div class="container">
-            <h2 data-translate="process_h2" style="text-align: center; margin-bottom: 50px;">Quy trình Vận hành Đơn giản</h2>
+            <h2 style="text-align: center; margin-bottom: 50px;">Quy trình vận hành đơn giản</h2>
             <div class="step-line-container" style="display: flex; justify-content: space-around; text-align: center;">
                 <div class="step-item">
                     <div style="font-size: 3em; color: var(--color-primary);"><i class="fas fa-edit"></i></div>
-                    <h3 data-translate="process1_title" style="font-size: 1.5em;">Bước 1: Ghi nhận</h3>
-                    <p data-translate="process1_desc">Nhập hoạt động, vai trò và kết quả.</p>
+                    <h3 style="font-size: 1.5em;">Bước 1: Ghi nhận</h3>
+                    <p>Nhập hoạt động, vai trò và kết quả.</p>
                 </div>
-                <div style="font-size: 3em; color: var(--color-text-medium); align-self: flex-start; margin-top: 15px;">&rarr;</div>
+                <div style="font-size: 3em; color: var(--color-text-medium); align-self: flex-start; margin-top: 15px;"></div>
                 <div class="step-item">
                     <div style="font-size: 3em; color: var(--color-primary);"><i class="fas fa-cogs"></i></div>
-                    <h3 data-translate="process2_title" style="font-size: 1.5em;">Bước 2: Phân tích</h3>
-                    <p data-translate="process2_desc">Hệ thống tính toán trọng số điểm và xác minh (Mock).</p>
+                    <h3 style="font-size: 1.5em;">Bước 2: Phân tích</h3>
+                    <p>Hệ thống tính toán trọng số điểm và xác minh (Mock).</p>
                 </div>
-                <div style="font-size: 3em; color: var(--color-text-medium); align-self: flex-start; margin-top: 15px;">&rarr;</div>
+                <div style="font-size: 3em; color: var(--color-text-medium); align-self: flex-start; margin-top: 15px;"></div>
                 <div class="step-item">
                     <div style="font-size: 3em; color: var(--color-primary);"><i class="fas fa-chart-pie"></i></div>
-                    <h3 data-translate="process3_title" style="font-size: 1.5em;">Bước 3: Đo lường</h3>
-                    <p data-translate="process3_desc">Xem Biểu đồ Radar và điểm số.</p>
+                    <h3 style="font-size: 1.5em;">Bước 3: Đo lường</h3>
+                    <p>Xem Biểu đồ Radar và điểm số.</p>
                 </div>
             </div>
         </div>
@@ -124,30 +269,30 @@
     
     <section id="testimonials" style="padding: 80px 0; background-color: var(--color-white);">
         <div class="container">
-            <h2 data-translate="testimonials_h2" style="text-align: center; margin-bottom: 50px;">Đánh giá của Cộng đồng Sinh viên</h2>
+            <h2 style="text-align: center; margin-bottom: 50px;">Đánh giá của cộng đồng sinh viên</h2>
             
-            <div class="testimonial-grid" style="gap: 30px;">
-                <div class="testimonial-card glass-box">
+            <div class="testimonial-grid" style="gap: 30px; display:flex;">
+                <div class="testimonial-card glass-box stat-card">
                     <i class="fas fa-quote-left quote-icon" style="color: var(--color-accent); float: left; margin-right: 10px; font-size: 1.5em;"></i>
-                    <p data-translate="testimony1_text" style="font-style: italic;">"Nhờ Biểu đồ Kỹ năng, tôi biết chính xác mình mạnh ở điểm nào. Mô tả kỹ năng trong CV trở nên dễ dàng và thuyết phục hơn rất nhiều."</p>
+                    <p style="font-style: italic;">"Nhờ biểu đồ kỹ năng, tôi biết chính xác mình mạnh ở điểm nào. Mô tả kỹ năng trong CV trở nên dễ dàng và thuyết phục hơn rất nhiều."</p>
                     <div class="client-info" style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 15px;">
-                        <span data-translate="testimony1_client" style="font-weight: 600;">Trần Văn A</span>, <span data-translate="testimony1_role">Sinh viên ĐH Kinh tế.</span>
+                        <span style="font-weight: 600;">Trần Văn A</span>, Sinh viên ĐH Kinh tế.
                     </div>
                 </div>
                 
-                <div class="testimonial-card glass-box">
+                <div class="testimonial-card glass-box stat-card">
                     <i class="fas fa-quote-left quote-icon" style="color: var(--color-accent); float: left; margin-right: 10px; font-size: 1.5em;"></i>
-                    <p data-translate="testimony2_text" style="font-style: italic;">"Hệ thống đo lường rất khách quan, tôi không còn cảm thấy mơ hồ về Teamwork nữa. Có dữ liệu để đối chiếu trong buổi phỏng vấn."</p>
+                    <p style="font-style: italic;">"Hệ thống đo lường rất khách quan, tôi không còn cảm thấy mơ hồ về Teamwork nữa. Có dữ liệu để đối chiếu trong buổi phỏng vấn."</p>
                     <div class="client-info" style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 15px;">
-                        <span data-translate="testimony2_client" style="font-weight: 600;">Nguyễn Thị B</span>, <span data-translate="testimony2_role">Chuyên viên Marketing.</span>
+                        <span style="font-weight: 600;">Nguyễn Thị B</span>, Chuyên viên Marketing.
                     </div>
                 </div>
                 
-                <div class="testimonial-card glass-box">
+                <div class="testimonial-card glass-box stat-card">
                     <i class="fas fa-quote-left quote-icon" style="color: var(--color-accent); float: left; margin-right: 10px; font-size: 1.5em;"></i>
-                    <p data-translate="testimony3_text" style="font-style: italic;">"Tôi dùng tính năng so sánh thị trường để biết mình cần học thêm gì. Một lộ trình phát triển cá nhân cực kỳ rõ ràng."</p>
+                    <p style="font-style: italic;">"Tôi dùng tính năng so sánh thị trường để biết mình cần học thêm gì. Một lộ trình phát triển cá nhân cực kỳ rõ ràng."</p>
                     <div class="client-info" style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 15px;">
-                        <span data-translate="testimony3_client" style="font-weight: 600;">Lê Văn C</span>, <span data-translate="testimony3_role">Sinh viên IT.</span>
+                        <span style="font-weight: 600;">Lê Văn C</span>, Sinh viên IT.
                     </div>
                 </div>
             </div>
@@ -156,41 +301,30 @@
 
     <section id="faq" style="padding: 80px 0; background-color: var(--color-background-muted);">
         <div class="container">
-            <h2 data-translate="faq_h2" style="text-align: center; margin-bottom: 40px;">Các Câu hỏi Thường gặp (FAQ)</h2>
+            <h2 style="text-align: center; margin-bottom: 40px;">Các câu hỏi thường gặp</h2>
             <div class="faq-accordion-container" style="max-width: 800px; margin: 0 auto;">
                 
-                <div class="faq-item glass-box" style="padding: 15px; margin-bottom: 15px;">
-                    <h4 data-translate="faq1_title" style="font-size: 1.2em; margin-bottom: 5px;">Làm sao để điểm kỹ năng được khách quan?</h4>
-                    <p data-translate="faq1_desc" style="font-size: 0.9em; color: var(--color-text-medium);">
+                <div class="faq-item glass-box stat-card" style="padding: 15px; margin-bottom: 15px;">
+                    <h4 style="font-size: 1.2em; margin-bottom: 5px;">Làm sao để điểm kỹ năng được khách quan?</h4>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">
                         Chúng tôi sử dụng một mô hình tính toán trọng số dựa trên vai trò, kết quả, và có chức năng gửi email xác nhận cho người giám sát/trưởng nhóm của bạn (Mock).
                     </p>
                 </div>
                 
-                <div class="faq-item glass-box" style="padding: 15px; margin-bottom: 15px;">
-                    <h4 data-translate="faq2_title" style="font-size: 1.2em; margin-bottom: 5px;">Thông tin cá nhân có bị công khai không?</h4>
-                    <p data-translate="faq2_desc" style="font-size: 0.9em; color: var(--color-text-medium);">
+                <div class="faq-item glass-box stat-card" style="padding: 15px; margin-bottom: 15px;">
+                    <h4 style="font-size: 1.2em; margin-bottom: 5px;">Thông tin cá nhân có bị công khai không?</h4>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">
                         Không. Dữ liệu chi tiết chỉ có bạn thấy. Bạn chỉ chia sẻ hồ sơ tổng hợp (dạng biểu đồ/link) khi bạn chọn chia sẻ với nhà tuyển dụng.
                     </p>
                 </div>
                 
-                <div class="faq-item glass-box" style="padding: 15px; margin-bottom: 15px;">
-                    <h4 data-translate="faq3_title" style="font-size: 1.2em; margin-bottom: 5px;">Web có mất phí hay là tính năng Premium?</h4>
-                    <p data-translate="faq3_desc" style="font-size: 0.9em; color: var(--color-text-medium);">
+                <div class="faq-item glass-box stat-card" style="padding: 15px; margin-bottom: 15px;">
+                    <h4 style="font-size: 1.2em; margin-bottom: 5px;">Web có mất phí hay là tính năng Premium?</h4>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);">
                         Các chức năng cốt lõi (Ghi nhận, Đo lường) là miễn phí. Tính năng nâng cao (Tích hợp nguồn dữ liệu, Tùy chỉnh báo cáo) là tính năng Premium (Mock).
                     </p>
                 </div>
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="terms.html" class="btn btn-link" data-translate="faq_cta_more">Xem toàn bộ FAQ</a>
-                </div>
             </div>
-        </div>
-    </section>
-
-
-    <section style="padding: 80px 0; background-color: var(--color-primary);">
-        <div class="container" style="text-align: center;">
-            <h2 data-translate="cta_section_h2" style="color: var(--color-white); margin-bottom: 30px; background: none; -webkit-text-fill-color: var(--color-white);">Bắt đầu Hành trình Phát triển Kỹ năng của bạn</h2>
-            <a href="auth.html" class="btn btn-accent btn-large" style="padding: 18px 40px; font-size: 1.2em;" data-translate="cta_section_signup">Đăng Ký Miễn Phí <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
@@ -198,15 +332,15 @@
         <div class="container" style="padding-top: 30px; padding-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div class="col" style="font-weight: 700;">
-                    <div class="logo" style="color: var(--color-primary);">future<span class="logo-xion" style="color: var(--color-accent);">Xion</span></div>
+                    <div class="logo" style="color: var(--color-primary);">Future<span class="logo-xion" style="color: var(--color-accent);">Xion</span></div>
                 </div>
                 <div class="col" style="color: var(--color-text-medium); font-size: 0.9em;">
                     <i class="fas fa-phone-alt"></i> 0123456789 | 
                     <i class="fas fa-envelope" style="margin-left: 10px;"></i> Futurexion@gmail.com
                 </div>
                 <div class="col">
-                    <a href="terms.html" style="color: var(--color-text-medium); margin-right: 15px;" data-translate="footer_legal">Pháp lý</a>
-                    <a href="terms.html" style="color: var(--color-text-medium);" data-translate="footer_policy">Chính sách</a>
+                    <a href="terms.html" style="color: var(--color-text-medium); margin-right: 15px;">Chính sách & pháp lý</a>
+                    
                 </div>
             </div>
         </div>
@@ -214,101 +348,43 @@
             Copyright © 2025 FutureXion. All rights reserved.
         </div>
     </footer>
-    
-    <script>
-        const translations = {
-            vi: {
-                title_index: "Future Xion - Hệ thống Ghi nhận & Đo lường Kỹ năng Mềm",
-                nav_features: "Tính năng", nav_benefits: "Lợi ích", nav_process: "Quy trình", nav_testimonials: "Đánh giá", nav_signin: "Đăng nhập",
-                hero_heading: "Biến **Kinh nghiệm Rải rác** thành Hồ sơ Kỹ năng Chuyên nghiệp", hero_subtitle: "**Mục đích:** Nền tảng giúp sinh viên **ghi nhận, đo lường khách quan** các kỹ năng mềm (Lãnh đạo, Giao tiếp) để tối ưu CV và phỏng vấn.",
-                hero_cta_signup: "Tạo hồ sơ miễn phí ", hero_cta_demo: "Xem Dashboard Demo", hero_illustration_text: "[Hình minh họa Chính (Vector)]",
-                
-                features_h2: "Chức năng Cốt lõi của Web", feature1_title: "Ghi nhận Dữ liệu", feature1_desc: "Chuyển đổi kinh nghiệm rải rác (CLB, dự án) thành dữ liệu có cấu trúc để đo lường.",
-                feature2_title: "Đo lường Khách quan", feature2_desc: "Sử dụng Biểu đồ Radar để trực quan hóa mức độ phát triển của từng kỹ năng (Điểm số 1-5).",
-                feature3_title: "Hồ sơ Ứng tuyển", feature3_desc: "Cung cấp gợi ý mô tả kỹ năng cho CV và so sánh với điểm chuẩn thị trường lao động.",
 
-                benefits_h2: "Lợi ích Tuyệt đối (Value Proposition)", benefit1_title: "Xác định Điểm Mạnh", benefit1_desc: "Biết chính xác nên nhấn mạnh kỹ năng nào trong các vòng phỏng vấn.",
-                benefit2_title: "Chứng minh STAR", benefit2_desc: "Có dữ liệu, hoạt động cụ thể để trả lời các câu hỏi tình huống (phương pháp STAR).",
-                benefit3_title: "Lộ trình Cải thiện", benefit3_desc: "Nhận khuyến nghị hành động cụ thể cho kỹ năng có điểm số thấp nhất.",
-                
-                process_h2: "Quy trình Vận hành Đơn giản", process1_title: "Bước 1: Ghi nhận", process1_desc: "Nhập hoạt động, vai trò và kết quả.",
-                process2_title: "Bước 2: Phân tích", process2_desc: "Hệ thống tính toán trọng số điểm và xác minh (Mock).",
-                process3_title: "Bước 3: Đo lường", process3_desc: "Xem Biểu đồ Radar và điểm số.",
-                
-                testimonials_h2: "Đánh giá của Cộng đồng Sinh viên", testimony1_text: "\"Nhờ Biểu đồ Kỹ năng, tôi biết chính xác mình mạnh ở điểm nào. Mô tả kỹ năng trong CV trở nên dễ dàng và thuyết phục hơn rất nhiều.\"",
-                testimony1_client: "Trần Văn A", testimony1_role: "Sinh viên ĐH Kinh tế.",
-                testimony2_text: "\"Hệ thống đo lường rất khách quan, tôi không còn cảm thấy mơ hồ về Teamwork nữa. Có dữ liệu để đối chiếu trong buổi phỏng vấn.\"",
-                testimony2_client: "Nguyễn Thị B", testimony2_role: "Chuyên viên Marketing.",
-                testimony3_text: "\"Tôi dùng tính năng so sánh thị trường để biết mình cần học thêm gì. Một lộ trình phát triển cá nhân cực kỳ rõ ràng.\"",
-                testimony3_client: "Lê Văn C", testimony3_role: "Sinh viên IT.",
-
-                faq_h2: "Các Câu hỏi Thường gặp (FAQ)", faq1_title: "Làm sao để điểm kỹ năng được khách quan?", faq1_desc: "Chúng tôi sử dụng một mô hình tính toán trọng số dựa trên vai trò, kết quả, và có chức năng gửi email xác nhận cho người giám sát/trưởng nhóm của bạn (Mock).",
-                faq2_title: "Thông tin cá nhân có bị công khai không?", faq2_desc: "Không. Dữ liệu chi tiết chỉ có bạn thấy. Bạn chỉ chia sẻ hồ sơ tổng hợp (dạng biểu đồ/link) khi bạn chọn chia sẻ với nhà tuyển dụng.",
-                faq3_title: "Web có mất phí hay là tính năng Premium?", faq3_desc: "Các chức năng cốt lõi (Ghi nhận, Đo lường) là miễn phí. Tính năng nâng cao (Tích hợp nguồn dữ liệu, Tùy chỉnh báo cáo) là tính năng Premium (Mock).",
-                faq_cta_more: "Xem toàn bộ FAQ",
-
-                cta_section_h2: "Bắt đầu Hành trình Phát triển Kỹ năng của bạn", cta_section_signup: "Đăng Ký Miễn Phí ",
-                footer_legal: "Pháp lý", footer_policy: "Chính sách",
-            },
-            en: {
-                title_index: "Future Xion - Soft Skills Logging & Measurement System",
-                nav_features: "Features", nav_benefits: "Benefits", nav_process: "Process", nav_testimonials: "Testimonials", nav_signin: "Sign In",
-                hero_heading: "Turn Dispersed Experiences into a Professional Skill Profile", hero_subtitle: "**Purpose:** A platform that helps students objectively log and measure soft skills (Leadership, Communication) to optimize CVs and interviews.",
-                hero_cta_signup: "Create Free Profile ", hero_cta_demo: "View Demo Dashboard", hero_illustration_text: "[Main Illustration (Vector)]",
-                
-                features_h2: "Core Web Functionalities", feature1_title: "Data Logging", feature1_desc: "Convert scattered experience (Clubs, projects) into structured data for measurement.",
-                feature2_title: "Objective Measurement", feature2_desc: "Use a Radar Chart to visualize the development level of each skill (Score 1-5).",
-                feature3_title: "Application Profile", feature3_desc: "Provide skill description suggestions for CVs and benchmark against industry standards.",
-
-                benefits_h2: "Absolute Benefits (Value Proposition)", benefit1_title: "Identify Strengths", benefit1_desc: "Know exactly which skills to emphasize during interview rounds.",
-                benefit2_title: "STAR Proof", benefit2_desc: "Have specific data and activities to answer situational questions (STAR method).",
-                benefit3_title: "Improvement Roadmap", benefit3_desc: "Receive specific action recommendations for the lowest-scoring skills.",
-                
-                process_h2: "Simple Operating Process", process1_title: "Step 1: Log", process1_desc: "Enter activity, role, and results.",
-                process2_title: "Step 2: Analysis", process2_desc: "The system calculates score weighting and verification (Mock).",
-                process3_title: "Step 3: Measure", process3_desc: "View Radar Chart and score.",
-                
-                testimonials_h2: "Student Community Reviews", testimony1_text: "\"Thanks to the Skill Chart, I know exactly what my strengths are. Describing skills on my CV has become much easier and more convincing.\"",
-                testimony1_client: "Tran Van A", testimony1_role: "Economics University Student.",
-                testimony2_text: "\"The measurement system is very objective; I no longer feel vague about Teamwork. I have data to reference in the interview.\"",
-                testimony2_client: "Nguyen Thi B", testimony2_role: "Marketing Specialist.",
-                testimony3_text: "\"I use the market comparison feature to know what else I need to learn. An extremely clear personal development roadmap.\"",
-                testimony3_client: "Le Van C", testimony3_role: "IT Student.",
-
-                faq_h2: "Frequently Asked Questions (FAQ)", faq1_title: "How are the skill scores objective?", faq1_desc: "We use a weighted calculation model based on role and results, and have a mock function to send email confirmation requests to your supervisor/team lead.",
-                faq2_title: "Is personal information public?", faq2_desc: "No. Detailed data is only visible to you. You only share the summary profile (chart/link form) when you choose to share it with an employer.",
-                faq3_title: "Is the web paid or premium feature?", faq3_desc: "Core functions (Logging, Measurement) are free. Advanced features (Data source integration, Custom reporting) are Premium features (Mock).",
-                faq_cta_more: "View full FAQ",
-
-                cta_section_h2: "Start Your Skill Development Journey", cta_section_signup: "Sign Up For Free ",
-                footer_legal: "Legal", footer_policy: "Policy",
-            }
-        };
-
-        function applyLanguage(isLandingPage = false) {
-            const currentLang = localStorage.getItem('language') || 'vi';
-            const t = translations[currentLang];
-            
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (t[key]) {
-                    // Cập nhật nội dung, giữ lại các phần tử con không phải là văn bản
-                    if (key.includes('cta') || key.includes('hero_cta_')) {
-                        // Giữ lại icon
-                        const icon = element.querySelector('i');
-                        element.textContent = t[key];
-                        if (icon) element.appendChild(icon);
-                    } else if (key === 'title_index') {
-                         document.title = t[key];
-                    } else {
-                        element.innerHTML = t[key];
+<script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+        (function () {
+            function refreshCSS() {
+                var sheets = [].slice.call(document.getElementsByTagName("link"));
+                var head = document.getElementsByTagName("head")[0];
+                for (var i = 0; i < sheets.length; ++i) {
+                    var elem = sheets[i];
+                    var parent = elem.parentElement || head;
+                    parent.removeChild(elem);
+                    var rel = elem.rel;
+                    if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                        var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
                     }
+                    parent.appendChild(elem);
                 }
-            });
-        }
-        
-        // Khởi tạo trạng thái ngôn ngữ khi tải trang
-        document.addEventListener('DOMContentLoaded', () => applyLanguage(true));
-    </script>
+            }
+            var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+            var address = protocol + window.location.host + window.location.pathname + '/ws';
+            var socket = new WebSocket(address);
+            socket.onmessage = function (msg) {
+                if (msg.data == 'reload') window.location.reload();
+                else if (msg.data == 'refreshcss') refreshCSS();
+            };
+            if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                console.log('Live reload enabled.');
+                sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+            }
+        })();
+    }
+    else {
+        console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+</script>
 </body>
 </html>
