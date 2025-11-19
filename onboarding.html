@@ -3,252 +3,648 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onboarding - Thiết lập Hồ sơ Kỹ năng</title>
+    <title data-translate="title_dashboard">Dashboard - Future Xion</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <style>
+        /* CSS ĐƯỢC GIỮ NGUYÊN */
+        :root {
+            --color-primary: #5A189A;
+            --color-accent: #4F9AFF;
+            --color-callout: #FFD700;
+            --glass-background: rgba(255, 255, 255, 0.6);
+            --color-white: #ffffff;
+            --color-background-light: #f7f7f7;
+            --color-background-muted: #ececec;
+            --color-text-dark: #333;
+            --color-text-medium: #555;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-background-light);
+        }
+
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .sidebar .logo-xion {
+            color: var(--color-accent);
+        }
+        
+        .sidebar nav a {
+            display: block;
+            color: var(--color-white);
+            text-decoration: none;
+            padding: 12px 10px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar nav a:hover, .sidebar nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar nav i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: var(--color-background-light);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5em;
+        }
+
+        .btn-accent {
+            background-color: var(--color-accent);
+            color: var(--color-white);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-accent:hover {
+             background-color: #3f7de0;
+        }
+        
+        .btn-accent i {
+            margin-right: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--glass-background);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            text-align: left;
+            border-left: 5px solid var(--color-primary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card i {
+            margin-right: 5px;
+        }
+
+        .primary-color {
+            color: var(--color-primary);
+        }
+        .accent-color {
+            color: var(--color-accent);
+        }
+        
+        .chart-area {
+            background: var(--glass-background);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-height: 250px;
+        }
+
+        .chart-area h2, .chart-area h3 {
+             font-family: 'Outfit', sans-serif;
+        }
+        
+        .form-group {
+            margin-bottom: 10px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 30px;
+            background: var(--glass-background);
+            border-radius: 12px;
+            margin-top: 40px;
+            border: 2px dashed var(--color-primary);
+        }
+        .empty-state .icon {
+            font-size: 4em;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+        }
+        .empty-state h2 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+        .empty-state p {
+            color: var(--color-text-medium);
+            margin-bottom: 30px;
+        }
+        .chart-container-hidden {
+            display: none !important;
+        }
+        .stat-card-empty p {
+            color: var(--color-text-medium) !important;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #4B1480;
+        }
+
+    </style>
 </head>
-<body class="auth-page">
-
-    <div class="auth-box" style="max-width: 650px; padding: 40px;">
+<body onload="initializeChartsAndApplyLanguage()">
+    
+    <div class="dashboard-layout">
         
-        <div class="icon-lock"><i class="fas fa-route" style="font-size: 3em; background-image: linear-gradient(to right, #8C82FF, #4F9AFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i></div>
-        <h2 style="font-size: 2.2em; margin-bottom: 5px;">Bắt đầu Lộ trình Phát triển</h2>
-        <p class="subtitle" style="margin-bottom: 30px;">
-            Hoàn thành 3 bước đơn giản để cá nhân hóa Dashboard của bạn.
-        </p>
-        
-        <!-- BỘ CHỈ BÁO TIẾN TRÌNH 4 BƯỚC -->
-        <div id="progress-indicator" style="display: flex; justify-content: space-between; margin-bottom: 40px; padding: 0 50px;">
-            <div class="step-icon-container" data-step="1">
-                <div class="step-circle active" id="circle-1">1</div>
-                <small>Ngành học</small>
-            </div>
-            <div class="step-line" style="width: 60px; height: 2px; background-color: var(--color-background-muted); margin-top: 19px;"></div>
-            <div class="step-icon-container" data-step="2">
-                <div class="step-circle" id="circle-2">2</div>
-                <small>Mục tiêu</small>
-            </div>
-             <div class="step-line" style="width: 60px; height: 2px; background-color: var(--color-background-muted); margin-top: 19px;"></div>
-            <div class="step-icon-container" data-step="3">
-                <div class="step-circle" id="circle-3">3</div>
-                <small>Tự đánh giá</small>
-            </div>
-            <div class="step-line" style="width: 60px; height: 2px; background-color: var(--color-background-muted); margin-top: 19px;"></div>
-            <div class="step-icon-container" data-step="4">
-                <div class="step-circle" id="circle-4">4</div>
-                <small>Hoàn tất</small>
-            </div>
-        </div>
+        <aside class="sidebar">
+            <div class="logo">future<span class="logo-xion">Xion</span></div>
+            <nav>
+                <a href="#" class="active" data-translate="menu_dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                <a href="activity.html" data-translate="menu_activity"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
+                <a href="report.html" data-translate="menu_report"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
+                <a href="settings.html" data-translate="menu_settings"><i class="fas fa-cog"></i> Cài đặt</a>
+                <a href="auth.html" data-translate="menu_logout" onclick="localStorage.clear();"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </nav>
+        </aside>
 
-
-        <form id="onboarding-form"> 
-            <!-- BƯỚC 1: THÔNG TIN NGÀNH HỌC (GỐC) -->
-            <div id="step-1" class="onboarding-step fade-in">
-                <h3 style="font-size: 1.5em; color: var(--color-text-dark);">Bước 1: Thông tin Ngành học</h3>
-                <p style="margin-bottom: 20px;">Chúng tôi cần thông tin này để so sánh bạn với điểm chuẩn thị trường.</p>
-                <div class="form-group">
-                    <label for="major" style="text-align: left;">Ngành học/Chuyên ngành của bạn:</label>
-                    <input type="text" id="major" placeholder="Ví dụ: Marketing, Công nghệ thông tin..." required>
-                </div>
-                <div class="form-group">
-                    <label for="university" style="text-align: left;">Trường Đại học:</label>
-                    <input type="text" id="university" placeholder="Tên trường..." required>
-                </div>
-                <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="validateStep(1)">Tiếp theo</button>
+        <main class="main-content">
+            
+            <div class="dashboard-header" style="border-bottom: none; padding-bottom: 0;">
+                <h1 id="welcome-message" style="margin-bottom: 5px;">Dashboard Cá Nhân</h1>
+                <a href="activity.html" class="btn btn-accent" data-translate="cta_log_activity"><i class="fas fa-plus"></i> Ghi nhận Hoạt động Mới</a>
             </div>
 
+            <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-top: 20px;">
+                <a href="report.html" class="stat-card" id="stat-skill-score" style="text-decoration: none;">
+                    <h3 data-translate="stat_avg_skill"><i class="fas fa-star primary-color"></i> Điểm Kỹ năng</h3>
+                    <p id="stat-avg-score-value" style="font-size: 2.2em; color: var(--color-primary);">4.0</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);" data-translate="stat_avg_skill_sub">Trên 5 kỹ năng cốt lõi</p>
+                </a>
+                <a href="history.html" class="stat-card" id="stat-logged-activity" style="text-decoration: none;">
+                    <h3 data-translate="stat_logged_activity"><i class="fas fa-clipboard-list primary-color"></i> Hoạt động Đã Ghi</h3>
+                    <p id="stat-activity-count-value" style="font-size: 2.2em; color: var(--color-text-dark);">12</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);" data-translate="stat_logged_activity_sub">Xem nhật ký chi tiết</p>
+                </a>
+                <a href="badges.html" class="stat-card" id="stat-badges" style="text-decoration: none;">
+                    <h3 data-translate="stat_badges"><i class="fas fa-award accent-color"></i> Huy hiệu Hiện tại</h3>
+                    <p id="stat-badges-value" style="font-size: 2.2em; color: var(--color-accent);">2</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);" data-translate="stat_badges_sub">Chiến Binh Teamwork</p>
+                </a>
+                <a href="goals.html" class="stat-card" id="stat-goal-progress" style="text-decoration: none;">
+                    <h3 data-translate="stat_goal_progress"><i class="fas fa-bullseye primary-color"></i> Tiến độ Mục tiêu</h3>
+                    <p id="stat-goal-value" style="font-size: 2.2em; color: var(--color-primary);">80%</p>
+                    <p style="font-size: 0.9em; color: var(--color-text-medium);" data-translate="stat_goal_progress_sub">Leadership 4.2 / 4.5</p>
+                </a>
+            </div>
+            
+            <div id="empty-state-message" class="empty-state chart-container-hidden">
+                <div class="icon"><i class="fas fa-rocket"></i></div>
+                <h2 data-translate="empty_h2">Bắt đầu hành trình phát triển kỹ năng của bạn!</h2>
+                <p data-translate="empty_p">Dashboard của bạn đang trống. Hãy ghi nhận hoạt động ngoại khóa, dự án hoặc kinh nghiệm đầu tiên của bạn để hệ thống bắt đầu đo lường và hiển thị điểm số kỹ năng.</p>
+                <a href="activity.html" class="btn btn-primary" style="padding: 15px 30px; font-size: 1.1em;" data-translate="cta_start_logging">Ghi nhận Hoạt động Đầu tiên</a>
+            </div>
 
-            <!-- BƯỚC 2: MỤC TIÊU KỸ NĂNG (CẬP NHẬT: CHỌN NHIỀU KỸ NĂNG) -->
-            <div id="step-2" class="onboarding-step fade-in" style="display: none;">
-                <h3 style="font-size: 1.5em; color: var(--color-text-dark);">Bước 2: Mục tiêu Kỹ năng Tập trung</h3>
-                <p style="margin-bottom: 20px;">Chọn (tối thiểu 3) kỹ năng bạn muốn tập trung phát triển trong 6 tháng tới.</p>
-                
-                <div class="form-group">
-                    <label style="margin-bottom: 10px;">Kỹ năng muốn cải thiện:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: left;">
-                        <label><input type="checkbox" name="focus_skill" value="Leadership"> Lãnh đạo</label>
-                        <label><input type="checkbox" name="focus_skill" value="Communication"> Giao tiếp</label>
-                        <label><input type="checkbox" name="focus_skill" value="Teamwork"> Làm việc nhóm</label>
-                        <label><input type="checkbox" name="focus_skill" value="ProblemSolving"> Giải quyết Vấn đề</label>
-                        <label><input type="checkbox" name="focus_skill" value="CriticalThinking"> Tư duy Phản biện</label>
+            <div id="data-content-area" class="chart-container-hidden">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 40px;">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 30px;">
+                        
+                        <div class="chart-area" id="chart-web-rating" style="flex-grow: 1; padding: 30px;">
+                            <h2 style="font-size: 2em; margin-bottom: 20px;" data-translate="h2_web_rating">1. Phân tích Điểm mạnh/Yếu</h2>
+                            <p style="font-size: 0.9em; color: var(--color-text-medium); margin-top: -15px;" data-translate="p_web_rating_sub">Điểm số cố định dựa trên các hoạt động đã được hệ thống đánh giá.</p>
+                            <div style="height: 400px; width: 100%;">
+                                <canvas id="skillsRadarChartWebRating"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-area" id="chart-trend" style="padding: 30px; flex-grow: 1;">
+                            <h2 style="font-size: 2em; margin-bottom: 20px;" data-translate="h2_trend_chart">2. Xu hướng Điểm Trung bình (6 Tháng)</h2>
+                            <div style="height: 300px; width: 100%;">
+                                <canvas id="averageTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 30px;">
+                        
+                        <div class="chart-area" id="chart-spotlight" style="padding: 30px; flex-grow: 1;">
+                            <h3 style="font-size: 1.5em; margin-bottom: 10px; color: var(--color-primary);" data-translate="h3_spotlight">Skill Spotlight & Khuyến nghị</h3>
+                            <div class="reco-box" id="reco-priority-box" style="border-left: 5px solid var(--color-accent); margin-bottom: 20px;">
+                                <p id="reco-priority-value" style="font-weight: 600; color: #dc3545;" data-translate="reco_priority">Ưu tiên: TƯ DUY PHẢN BIỆN (2.8)</p>
+                                <p style="font-size: 0.9em; margin-bottom: 10px;" data-translate="reco_priority_sub">Điểm dưới mức yêu cầu (3.5).</p>
+                                <a href="courses.html" class="btn btn-primary" style="padding: 10px 15px; font-size: 0.9em; box-shadow: none;" data-translate="cta_find_course">Tìm Khóa học Cải thiện</a>
+                            </div>
+                            
+                            <div class="stat-card" style="box-shadow: none; padding: 0;">
+                                <h4 id="reco-strongest-value" style="font-size: 1.2em; color: var(--color-text-dark); margin-bottom: 5px;" data-translate="reco_strongest">Mạnh nhất: GQ Vấn đề (4.5)</h4>
+                                <p style="font-size: 0.9em; color: var(--color-text-medium);" data-translate="reco_strongest_sub">Đã vượt mức yêu cầu ngành.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-area" id="chart-demo" style="padding: 30px; flex-grow: 1;">
+                            <h3 style="font-size: 1.5em; margin-bottom: 10px;" data-translate="h3_interaction_demo">3. Điều khiển Tương tác</h3>
+                            <p style="font-size: 0.9em; margin-bottom: 20px;" data-translate="p_interaction_demo_sub">Thay đổi điểm số để xem **Biểu đồ Demo** cập nhật ngay lập tức.</p>
+                            <div style="height: 200px; width: 100%; margin-bottom: 20px;">
+                                <canvas id="skillsRadarChartInteractionDemo"></canvas>
+                            </div>
+                            
+                            <div id="interaction-sliders">
+                                <div class="form-group"><label for="slider-0" style="display: flex; justify-content: space-between;"><span data-translate="skill_leadership">Lãnh đạo</span>: <span id="value-0">4.2</span></label><input type="range" id="slider-0" min="10" max="50" step="1" value="42" oninput="updateChartData(0, this.value)"></div>
+                                <div class="form-group"><label for="slider-1" style="display: flex; justify-content: space-between;"><span data-translate="skill_communication">Giao tiếp</span>: <span id="value-1">3.8</span></label><input type="range" id="slider-1" min="10" max="50" step="1" value="38" oninput="updateChartData(1, this.value)"></div>
+                                <div class="form-group"><label for="slider-2" style="display: flex; justify-content: space-between;"><span data-translate="skill_problemsolving">GQ Vấn đề</span>: <span id="value-2">4.5</span></label><input type="range" id="slider-2" min="10" max="50" step="1" value="45" oninput="updateChartData(2, this.value)"></div>
+                                <div class="form-group"><label for="slider-3" style="display: flex; justify-content: space-between;"><span data-translate="skill_teamwork">Teamwork</span>: <span id="value-3">4.0</span></label><input type="range" id="slider-3" min="10" max="50" step="1" value="40" oninput="updateChartData(3, this.value)"></div>
+                            </div>
+                            <button onclick="resetChartData()" class="btn btn-primary" style="margin-top: 20px; width: 100%; background-color: var(--color-callout); border-color: var(--color-callout);" data-translate="cta_reset_score">
+                                <i class="fas fa-undo-alt"></i> Khôi phục Điểm Ban đầu
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="custom-skill">Thêm kỹ năng khác (nếu không có trong danh mục):</label>
-                    <input type="text" id="custom-skill" placeholder="Ví dụ: Quản lý Xung đột, Đàm phán">
-                </div>
-                
-                <button type="button" class="btn btn-secondary" style="width: 48%; margin-top: 20px; box-shadow: none;" onclick="transitionStep(1)">Quay lại</button>
-                <button type="button" class="btn btn-primary" style="width: 48%; margin-top: 20px; float: right;" onclick="validateStep(2)">Tiếp theo</button>
             </div>
-            
-            <!-- BƯỚC 3: TỰ ĐÁNH GIÁ (SELF-ASSESSMENT) -->
-            <div id="step-3" class="onboarding-step fade-in" style="display: none;">
-                <h3 style="font-size: 1.5em; color: var(--color-text-dark);">Bước 3: Tự Đánh giá Mức độ Hiện tại</h3>
-                <p style="margin-bottom: 20px;">Hãy tự đánh giá mức độ hiện tại của bạn (Thang 1.0 - 5.0). *Lưu ý: Điểm này là điểm khởi tạo và sẽ được thay thế bằng Web Rating khi bạn ghi nhận hoạt động.*</p>
-                
-                <div id="initial-assessment-sliders">
-                    <!-- Sliders cho các kỹ năng cốt lõi (1.0 - 5.0) -->
-                    <div class="form-group"><label for="self-slider-0" style="display: flex; justify-content: space-between;">Lãnh đạo: <span id="self-value-0">3.0</span></label><input type="range" id="self-slider-0" min="10" max="50" step="1" value="30" oninput="updateSelfAssessment(0, this.value)"></div>
-                    <div class="form-group"><label for="self-slider-1" style="display: flex; justify-content: space-between;">Giao tiếp: <span id="self-value-1">3.0</span></label><input type="range" id="self-slider-1" min="10" max="50" step="1" value="30" oninput="updateSelfAssessment(1, this.value)"></div>
-                    <div class="form-group"><label for="self-slider-2" style="display: flex; justify-content: space-between;">Giải quyết Vấn đề: <span id="self-value-2">3.0</span></label><input type="range" id="self-slider-2" min="10" max="50" step="1" value="30" oninput="updateSelfAssessment(2, this.value)"></div>
-                    <div class="form-group"><label for="self-slider-3" style="display: flex; justify-content: space-between;">Làm việc nhóm: <span id="self-value-3">3.0</span></label><input type="range" id="self-slider-3" min="10" max="50" step="1" value="30" oninput="updateSelfAssessment(3, this.value)"></div>
-                </div>
-
-                <button type="button" class="btn btn-secondary" style="width: 48%; margin-top: 20px; box-shadow: none;" onclick="transitionStep(2)">Quay lại</button>
-                <button type="button" class="btn btn-primary" style="width: 48%; margin-top: 20px; float: right;" onclick="handleOnboardingSubmit()">Hoàn tất & Đến Dashboard</button>
-            </div>
-
-        </form>
+        </main>
     </div>
+
+<script>
+    let skillsRadarChartWebRating; 
+    let skillsRadarChartInteractionDemo;
+    let averageTrendChart;
+
+    const DashboardTranslations = {
+        vi: {
+            title_dashboard: "Dashboard - Future Xion", h1_dashboard: "Dashboard Cá Nhân",
+            menu_dashboard: "Dashboard", menu_activity: "Ghi nhận Hoạt động", menu_report: "Hồ sơ Kỹ năng (CV)", 
+            menu_settings: "Cài đặt", menu_logout: "Đăng xuất",
+            cta_log_activity: "Ghi nhận Hoạt động Mới", cta_start_logging: "Ghi nhận Hoạt động Đầu tiên",
+            stat_avg_skill: "Điểm Kỹ năng", stat_avg_skill_sub: "Trên 5 kỹ năng cốt lõi",
+            stat_logged_activity: "Hoạt động Đã Ghi", stat_logged_activity_sub: "Xem nhật ký chi tiết",
+            stat_badges: "Huy hiệu Hiện tại", stat_badges_sub: "Bắt đầu ghi nhận",
+            stat_goal_progress: "Tiến độ Mục tiêu", stat_goal_progress_sub: "Chưa thiết lập mục tiêu",
+            h2_web_rating: "1. Phân tích Điểm mạnh/Yếu", p_web_rating_sub: "Điểm số cố định dựa trên các hoạt động đã được hệ thống đánh giá.",
+            h2_trend_chart: "2. Xu hướng Điểm Trung bình (6 Tháng)",
+            h3_spotlight: "Skill Spotlight & Khuyến nghị", reco_priority: "Ưu tiên: TƯ DUY PHẢN BIỆN",
+            reco_priority_sub: "Điểm dưới mức yêu cầu (3.5).", cta_find_course: "Tìm Khóa học Cải thiện",
+            reco_strongest: "Mạnh nhất: GQ Vấn đề", reco_strongest_sub: "Đã vượt mức yêu cầu ngành.",
+            h3_interaction_demo: "3. Điều khiển Tương tác", p_interaction_demo_sub: "Thay đổi điểm số để xem **Biểu đồ Demo** cập nhật ngay lập tức.",
+            cta_reset_score: "Khôi phục Điểm Ban đầu",
+            empty_h2: "Bắt đầu hành trình phát triển kỹ năng của bạn!", 
+            empty_p: "Dashboard của bạn đang trống. Hãy ghi nhận hoạt động ngoại khóa, dự án hoặc kinh nghiệm đầu tiên của bạn để hệ thống bắt đầu đo lường và hiển thị điểm số kỹ năng.",
+            // Labels for sliders/chart
+            skill_leadership: "Lãnh đạo", skill_communication: "Giao tiếp", skill_problemsolving: "GQ Vấn đề", skill_teamwork: "Teamwork", skill_criticalthinking: "Tư duy Phản biện",
+            chart_label_your_score: "Điểm Của Bạn", chart_label_demand: "Mức Yêu cầu Ngành", chart_label_demo: "Điểm Tương tác (Demo)",
+            chart_label_avg: "Điểm Trung bình",
+            welcome_prefix: "Dashboard của "
+        },
+        en: {
+            title_dashboard: "Dashboard - Future Xion", h1_dashboard: "Personal Dashboard",
+            menu_dashboard: "Dashboard", menu_activity: "Log Activity", menu_report: "Skill Profile (CV)", 
+            menu_settings: "Settings", menu_logout: "Logout",
+            cta_log_activity: "Log New Activity", cta_start_logging: "Log Your First Activity",
+            stat_avg_skill: "Skill Score", stat_avg_skill_sub: "Across 5 core skills",
+            stat_logged_activity: "Logged Activities", stat_logged_activity_sub: "View detailed log",
+            stat_badges: "Current Badges", stat_badges_sub: "Start logging now",
+            stat_goal_progress: "Goal Progress", stat_goal_progress_sub: "Goal not set",
+            h2_web_rating: "1. Strength/Weakness Analysis", p_web_rating_sub: "Scores are based on activities verified/rated by the system.",
+            h2_trend_chart: "2. Average Score Trend (6 Months)",
+            h3_spotlight: "Skill Spotlight & Recommendations", reco_priority: "Priority: CRITICAL THINKING",
+            reco_priority_sub: "Below required level (3.5).", cta_find_course: "Find Improvement Courses",
+            reco_strongest: "Strongest: Problem Solving", reco_strongest_sub: "Exceeded industry requirement.",
+            h3_interaction_demo: "3. Interactive Control", p_interaction_demo_sub: "Change scores to see the **Demo Chart** update immediately.",
+            cta_reset_score: "Restore Initial Score",
+            empty_h2: "Start your skill development journey!",
+            empty_p: "Your dashboard is empty. Log your first extracurricular activity, project, or experience so the system can start measuring and displaying your skill score.",
+            // Labels for sliders/chart
+            skill_leadership: "Leadership", skill_communication: "Communication", skill_problemsolving: "Prob. Solving", skill_teamwork: "Teamwork", skill_criticalthinking: "Critical Thinking",
+            chart_label_your_score: "Your Score", chart_label_demand: "Industry Demand Level", chart_label_demo: "Interaction Score",
+            chart_label_avg: "Average Score",
+            welcome_prefix: "Dashboard for "
+        }
+    };
     
-    <script>
-        let currentStep = 1;
-        const totalSteps = 3; 
-        const form = document.getElementById('onboarding-form');
+    // Dữ liệu mẫu (sẽ được dùng nếu có dữ liệu)
+    const initialSkillsData = [4.2, 3.8, 4.5, 4.0, 2.8]; 
+    const industryDemand = [4.5, 4.0, 4.7, 4.2, 3.5]; 
+    const skillsLabels = [ 'Lãnh đạo', 'Giao tiếp', 'Giải quyết Vấn đề', 'Làm việc nhóm', 'Tư duy Phản biện', ];
+    const trendLabels = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'];
+    const trendData = [3.5, 3.7, 3.8, 3.9, 4.0, 4.1];
+    
+    // Giả định hàm kiểm tra dữ liệu hoạt động có sẵn trong localStorage
+    function hasActivityData() {
+        const activitiesJson = localStorage.getItem('userActivities');
+        if (!activitiesJson) return false;
         
-        // Hàm cập nhật giá trị slider tự đánh giá
-        function updateSelfAssessment(index, rawValue) {
-            const newValue = parseFloat(rawValue / 10).toFixed(1); 
-            document.getElementById(`self-value-${index}`).textContent = newValue;
+        try {
+            const activities = JSON.parse(activitiesJson);
+            // Coi là có dữ liệu nếu có ít nhất một hoạt động
+            return activities.length > 0; 
+        } catch (e) {
+            console.error("Lỗi phân tích cú pháp hoạt động:", e);
+            return false;
         }
-
-        // Hàm kiểm tra tính hợp lệ của các trường trong một bước
-        function isStepValid(stepNumber) {
-            const stepElement = document.getElementById(`step-${stepNumber}`);
-            let valid = true;
-            
-            // Kiểm tra các trường required (chỉ áp dụng cho step 1)
-            if (stepNumber === 1) {
-                const requiredFields = stepElement.querySelectorAll('[required]');
-                requiredFields.forEach(field => {
-                    if (!field.value) {
-                        valid = false;
-                        // Sử dụng báo cáo hợp lệ của HTML5
-                        field.reportValidity(); 
-                    }
-                });
-            }
-
-            // Kiểm tra đặc biệt cho Bước 2 (Chọn tối thiểu 3 kỹ năng)
-            if (stepNumber === 2) {
-                const checkedSkills = document.querySelectorAll('input[name="focus_skill"]:checked').length;
-                if (checkedSkills < 3) {
-                    // Cần có cách thông báo không dùng alert, ở đây tôi dùng báo cáo HTML5 cho trường đầu tiên
-                    const firstCheckbox = document.querySelector('input[name="focus_skill"]');
-                    firstCheckbox.setCustomValidity("Vui lòng chọn tối thiểu 3 kỹ năng để tập trung.");
-                    firstCheckbox.reportValidity();
-                    firstCheckbox.setCustomValidity(""); // Reset sau khi báo cáo
-                    valid = false;
-                }
-            }
-            return valid;
-        }
-
-        // Hàm chuyển bước (có kiểm tra)
-        function validateStep(stepNumber) {
-            if (isStepValid(stepNumber)) {
-                transitionStep(stepNumber + 1);
-            }
-        }
+    }
+    
+    // HÀM MỚI: Tải và tính toán dữ liệu Dashboard
+    function loadUserDashboardData() {
+        const activitiesJson = localStorage.getItem('userActivities');
+        let activities = activitiesJson ? JSON.parse(activitiesJson) : [];
         
-        // Hàm chuyển bước với hiệu ứng
-        function transitionStep(targetStep) {
-            const currentElement = document.getElementById(`step-${currentStep}`);
-            const targetElement = document.getElementById(`step-${targetStep}`);
-            
-            currentElement.style.opacity = '0';
-            currentElement.style.transform = 'translateX(' + (targetStep > currentStep ? '-20px' : '20px') + ')';
-
-            setTimeout(() => {
-                currentElement.style.display = 'none';
-                currentStep = targetStep;
-                updateProgressIndicator(currentStep);
-
-                targetElement.style.display = 'block';
-                targetElement.style.transform = 'translateX(0)';
-                targetElement.style.opacity = '1';
-                
-            }, 300);
-
-            targetElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            currentElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        }
-
-
-        // Hàm cập nhật chỉ báo tiến trình
-        function updateProgressIndicator(step) {
-            for (let i = 1; i <= totalSteps + 1; i++) { // totalSteps + 1 là 4 bước
-                const circle = document.getElementById(`circle-${i}`);
-                if (!circle) continue; 
-                const small = circle.nextElementSibling;
-
-                if (i < step) {
-                    circle.classList.remove('active');
-                    circle.classList.add('completed');
-                    circle.innerHTML = '<i class="fas fa-check"></i>';
-                    small.style.color = 'var(--color-accent)';
-                } else if (i === step) {
-                    circle.classList.add('active');
-                    circle.classList.remove('completed');
-                    circle.textContent = i === totalSteps + 1 ? 4 : i; // Vẫn hiển thị số bước hiện tại
-                    small.style.color = 'var(--color-primary)';
-                } else {
-                    circle.classList.remove('active', 'completed');
-                    circle.textContent = i;
-                    small.style.color = 'var(--color-text-medium)';
-                }
-            }
-        }
-
-        // Xử lý nút Hoàn tất (sau Bước 3)
-        function handleOnboardingSubmit() {
-            // Bước 3 không có trường required nghiêm ngặt, chỉ cần đảm bảo người dùng đã qua
-            
-            // Giả lập bước cuối cùng (Bước 4: Hoàn tất)
-            updateProgressIndicator(totalSteps + 1); 
-
-            // Loại bỏ alert và chuyển hướng trực tiếp
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 500); 
-        }
-
-        // Thêm CSS nhỏ bổ sung cho hiệu ứng Stepper
-        const style = document.createElement('style');
-        style.innerHTML = `
-            .step-circle {
-                width: 40px; height: 40px; background-color: var(--color-background-muted); 
-                color: var(--color-text-medium); border-radius: 50%; line-height: 40px;
-                font-weight: 600; margin: 0 auto 5px auto; transition: all 0.3s ease;
-                border: 2px solid var(--color-background-muted);
-                display: flex; justify-content: center; align-items: center; /* Căn giữa nội dung */
-            }
-            .step-circle.active {
-                background-color: var(--color-primary); color: white; border-color: var(--color-primary);
-            }
-            .step-circle.completed {
-                background-color: var(--color-accent); color: var(--color-text-dark);
-                font-size: 1.1em; line-height: 36px; border-color: var(--color-accent);
-            }
-            .onboarding-step {
-                opacity: 0;
-                transform: translateX(0);
-                transition: opacity 0.3s ease, transform 0.3s ease;
-            }
-        `;
-        document.head.appendChild(style);
-
-
-        // Khởi tạo trạng thái ban đầu
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('step-1').style.display = 'block';
-            document.getElementById('step-1').style.opacity = '1';
-            updateProgressIndicator(currentStep);
+        const activityCount = activities.length;
+        let totalPoints = 0;
+        
+        // Tính tổng điểm và điểm trung bình (trên thang 5.0)
+        activities.forEach(act => {
+             // Giả sử điểm 10-100 được quy đổi sang 1.0 - 5.0 
+             // Formula: (Points / 100) * 5.0
+             const score5pt = (act.points / 100) * 5.0; 
+             totalPoints += score5pt;
         });
-    </script>
 
-</body>
+        const avgScore = activityCount > 0 ? totalPoints / activityCount : 0;
+        
+        // MÔ PHỎNG: Cập nhật dữ liệu cho các chỉ số (Stats)
+        document.getElementById('stat-avg-score-value').textContent = avgScore.toFixed(2) === '0.00' ? 'N/A' : avgScore.toFixed(2);
+        document.getElementById('stat-logged-activity-value').textContent = activityCount;
+        
+        // MÔ PHỎNG: Cập nhật Huy hiệu và Mục tiêu
+        if (activityCount > 5) {
+            document.getElementById('stat-badges-value').textContent = '1';
+            document.querySelector('#stat-badges p').textContent = 'Chiến Binh Sơ Cấp';
+        } else {
+             document.getElementById('stat-badges-value').textContent = '0';
+        }
+
+        if (avgScore > 3.5) {
+            document.getElementById('stat-goal-value').textContent = '75%';
+            document.querySelector('#stat-goal-progress p').textContent = 'Đã đạt 3.5/4.5';
+        } else {
+             document.getElementById('stat-goal-value').textContent = '0%';
+        }
+        
+        return { avgScore, activityCount, activities };
+    }
+
+    // Hàm cập nhật chỉ số Stats khi không có dữ liệu
+    function updateEmptyStats() {
+        document.getElementById('stat-avg-score-value').textContent = 'N/A';
+        document.getElementById('stat-logged-activity-value').textContent = '0';
+        document.getElementById('stat-badges-value').textContent = '0';
+        document.getElementById('stat-goal-value').textContent = '0%';
+
+        document.querySelector('#stat-avg-score-value').style.color = 'var(--color-text-medium)';
+        document.querySelector('#stat-logged-activity-value').style.color = 'var(--color-text-dark)';
+        document.querySelector('#stat-badges-value').style.color = 'var(--color-text-medium)';
+        document.querySelector('#stat-goal-value').style.color = 'var(--color-text-medium)';
+
+        document.querySelector('#stat-avg-skill_sub').textContent = 'Trên 5 kỹ năng cốt lõi';
+        document.querySelector('#stat_logged_activity_sub').textContent = 'Xem nhật ký chi tiết';
+        document.querySelector('#stat_badges_sub').textContent = 'Bắt đầu ghi nhận';
+        document.querySelector('#stat_goal_progress_sub').textContent = 'Chưa thiết lập mục tiêu';
+    }
+
+    // Phần còn lại của các hàm chart và logic được giữ nguyên...
+    
+    function applyLanguageDashboard() {
+        const currentLang = localStorage.getItem('language') || 'vi';
+        const t = DashboardTranslations[currentLang];
+        
+        document.title = t.title_dashboard;
+        const userName = localStorage.getItem('currentUser') || 'Sinh viên Future Xion';
+        document.getElementById('welcome-message').textContent = t.welcome_prefix + userName;
+
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (t[key]) {
+                const icon = element.querySelector('i');
+                element.textContent = t[key];
+                if (icon) element.prepend(icon);
+            }
+        });
+
+        if (skillsRadarChartWebRating) updateChartLabels(currentLang);
+    }
+    
+    function updateChartLabels(lang) {
+        const t = DashboardTranslations[lang];
+        const currentSkillsLabels = [t.skill_leadership, t.skill_communication, t.skill_problemsolving, t.skill_teamwork, t.skill_criticalthinking];
+        
+        skillsRadarChartWebRating.data.labels = initialSkillsData.map((data, i) => `${currentSkillsLabels[i]} (${data.toFixed(1)})`);
+        skillsRadarChartWebRating.data.datasets[0].label = t.chart_label_your_score;
+        skillsRadarChartWebRating.data.datasets[1].label = t.chart_label_demand;
+        skillsRadarChartWebRating.update();
+
+        const currentDemoLabels = [t.skill_leadership, t.skill_communication, t.skill_problemsolving, t.skill_teamwork];
+        skillsRadarChartInteractionDemo.data.labels = skillsRadarChartInteractionDemo.data.datasets[0].data.map((data, i) => `${currentDemoLabels[i]} (${data.toFixed(1)})`);
+        skillsRadarChartInteractionDemo.data.datasets[0].label = t.chart_label_demo;
+        skillsRadarChartInteractionDemo.update();
+
+        averageTrendChart.data.datasets[0].label = t.chart_label_avg;
+        averageTrendChart.update();
+    }
+
+
+    const getRadarChartConfig = (data, labelColor, fillAlpha) => ({
+        type: 'radar',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                    grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                    pointLabels: { font: { size: 14, family: 'Poppins' }, color: labelColor },
+                    suggestedMin: 0,
+                    suggestedMax: 5.0,
+                    ticks: { stepSize: 1.0, color: 'var(--color-text-medium)' }
+                }
+            },
+            plugins: {
+                legend: { display: true, position: 'top', labels: { font: { family: 'Poppins' } } },
+                tooltip: { callbacks: { label: (context) => { 
+                    const label = context.dataset.label;
+                    const value = context.formattedValue;
+                    return ` ${label}: ${value}`;
+                } } }
+            }
+        },
+    });
+
+    const webRatingData = {
+        labels: skillsLabels.map((label, i) => `${label} (${initialSkillsData[i].toFixed(1)})`),
+        datasets: [{
+            label: 'Điểm Của Bạn (Web Rating)',
+            data: initialSkillsData,
+            fill: true,
+            backgroundColor: 'rgba(90, 24, 154, 0.4)', 
+            borderColor: 'var(--color-primary)',
+            pointBackgroundColor: 'var(--color-primary)', 
+            pointBorderColor: '#fff',
+        },
+        { 
+            label: 'Mức Yêu cầu Ngành',
+            data: industryDemand,
+            fill: false,
+            borderColor: 'rgba(255, 215, 0, 0.7)', 
+            pointRadius: 0,
+            borderDash: [5, 5],
+            borderWidth: 1
+        }]
+    };
+    
+    const interactionDemoData = {
+        labels: skillsLabels.slice(0, 4).map((label, i) => `${label} (${initialSkillsData[i].toFixed(1)})`),
+        datasets: [{
+            label: 'Điểm Tương tác (Demo)',
+            data: initialSkillsData.slice(0, 4),
+            fill: true,
+            backgroundColor: 'rgba(79, 154, 255, 0.5)', 
+            borderColor: 'var(--color-accent)',
+            pointBackgroundColor: 'var(--color-accent)', 
+            pointBorderColor: '#fff',
+            borderWidth: 2
+        }]
+    };
+    
+    const trendConfig = {
+        type: 'line',
+        data: {
+            labels: trendLabels,
+            datasets: [{
+                label: 'Điểm Trung bình',
+                data: trendData,
+                borderColor: 'var(--color-primary)',
+                backgroundColor: 'rgba(90, 24, 154, 0.1)',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 5,
+                pointBackgroundColor: 'var(--color-accent)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { suggestedMin: 3.0, suggestedMax: 5.0, ticks: { stepSize: 0.5 } }
+            },
+            plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } }
+        }
+    };
+
+    function updateChartData(index, rawValue) {
+        const newValue = parseFloat(rawValue / 10).toFixed(1); 
+        document.getElementById(`value-${index}`).textContent = newValue;
+
+        skillsRadarChartInteractionDemo.data.datasets[0].data[index] = parseFloat(newValue);
+        
+        const currentLang = localStorage.getItem('language') || 'vi';
+        const t = DashboardTranslations[currentLang];
+        const currentDemoLabels = [t.skill_leadership, t.skill_communication, t.skill_problemsolving, t.skill_teamwork];
+        skillsRadarChartInteractionDemo.data.labels[index] = `${currentDemoLabels[index]} (${newValue})`;
+
+        skillsRadarChartInteractionDemo.update();
+    }
+    
+    function resetChartData() {
+        const sliders = document.getElementById('interaction-sliders').getElementsByTagName('input');
+        
+        const currentLang = localStorage.getItem('language') || 'vi';
+        const t = DashboardTranslations[currentLang];
+        const currentDemoLabels = [t.skill_leadership, t.skill_communication, t.skill_problemsolving, t.skill_teamwork];
+
+        for(let i = 0; i < sliders.length; i++) {
+            const initialValueForSlider = initialSkillsData[i] * 10;
+            sliders[i].value = initialValueForSlider;
+            document.getElementById(`value-${i}`).textContent = initialSkillsData[i].toFixed(1);
+        }
+
+        skillsRadarChartInteractionDemo.data.datasets[0].data = [...initialSkillsData.slice(0, 4)]; 
+        skillsRadarChartInteractionDemo.data.labels = skillsLabels.slice(0, 4).map((label, i) => `${currentDemoLabels[i]} (${initialSkillsData[i].toFixed(1)})`);
+
+        skillsRadarChartInteractionDemo.update();
+    }
+
+    function initializeChartsAndApplyLanguage() {
+        const hasDataFlag = hasActivityData();
+
+        if (hasDataFlag) {
+            // Tải dữ liệu và cập nhật Stats
+            loadUserDashboardData(); 
+
+            // HIỂN THỊ CHẾ ĐỘ CÓ DỮ LIỆU
+            document.getElementById('data-content-area').classList.remove('chart-container-hidden');
+            document.getElementById('empty-state-message').classList.add('chart-container-hidden');
+            
+            // Khởi tạo các biểu đồ
+            var webRatingCtx = document.getElementById('skillsRadarChartWebRating').getContext('2d');
+            skillsRadarChartWebRating = new Chart(webRatingCtx, getRadarChartConfig(webRatingData, 'var(--color-text-dark)', 0.4)); 
+
+            var trendCtx = document.getElementById('averageTrendChart').getContext('2d');
+            averageTrendChart = new Chart(trendCtx, trendConfig);
+            
+            var demoCtx = document.getElementById('skillsRadarChartInteractionDemo').getContext('2d');
+            skillsRadarChartInteractionDemo = new Chart(demoCtx, getRadarChartConfig(interactionDemoData, 'var(--color-text-dark)', 0.5)); 
+            
+            resetChartData(); 
+            
+        } else {
+             // HIỂN THỊ CHẾ ĐỘ TRỐNG (EMPTY STATE)
+            document.getElementById('data-content-area').classList.add('chart-container-hidden');
+            document.getElementById('empty-state-message').classList.remove('chart-container-hidden');
+            
+            // Cập nhật các chỉ số Stats về 0/N/A
+            updateEmptyStats();
+        }
+        
+        // Áp dụng ngôn ngữ
+        applyLanguageDashboard();
+    }
+</script>
 </html>
