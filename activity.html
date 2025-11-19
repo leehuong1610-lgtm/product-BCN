@@ -3,311 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="title_activity">Ghi nhận Hoạt động - Future Xion</title>
+    <title>Ghi nhận Hoạt động - Future Xion</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body onload="applyLanguageActivity()">
-    
-    <div class="dashboard-layout">
-        <aside class="sidebar">
-            <div class="logo">future<span class="logo-xion">Xion</span></div>
-            <nav>
-                <a href="dashboard.html" data-translate="menu_dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
-                <a href="#" class="active" data-translate="menu_activity"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
-                <a href="report.html" data-translate="menu_report"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
-                <a href="settings.html" data-translate="menu_settings"><i class="fas fa-cog"></i> Cài đặt</a>
-                <a href="auth.html" data-translate="menu_logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-            </nav>
-        </aside>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #5A189A;
+            --color-accent: #4F9AFF;
+            --color-callout: #FFD700;
+            --glass-background: rgba(255, 255, 255, 0.6);
+            --color-white: #ffffff;
+            --color-background-light: #f7f7f7;
+            --color-text-dark: #333;
+            --border-color: #ddd;
+        }
 
-        <main class="main-content">
-            <div class="dashboard-header">
-                <h1 data-translate="h1_activity">Ghi nhận Hoạt động Mới</h1>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-background-light);
+            color: var(--color-text-dark);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background: var(--glass-background);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        input[type="text"], input[type="date"], select, textarea, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #4B1480;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động & Kinh nghiệm</h1>
+        <p>Vui lòng điền chi tiết kinh nghiệm của bạn để hệ thống có thể đo lường kỹ năng mềm.</p>
+        
+        <form id="activityForm" onsubmit="saveActivity(event)">
+            <div class="form-group">
+                <label for="activityName">Tên Hoạt động/Dự án:</label>
+                <input type="text" id="activityName" required placeholder="Ví dụ: Dự án Marketing CLB Yêu Sách">
             </div>
 
-            <div style="display: flex; gap: 30px;">
-                
-                <div style="flex: 2;">
-                    <div class="activity-box glass-box" style="padding: 40px;">
-                        <form id="activity-form">
-                            
-                            <h3 data-translate="h3_info_role" style="color: var(--color-primary);">1. Thông tin Cơ bản & Vai trò</h3>
-                            <div class="form-group"><label for="activity-name" data-translate="l_activity_name">Tên Hoạt động:</label><input type="text" id="activity-name" data-translate="ph_activity_name" placeholder="Ví dụ: Dự án 'Green Campus'" required></div>
-                            <div style="display: flex; gap: 20px;">
-                                <div class="form-group" style="flex: 1;"><label for="activity-date" data-translate="l_activity_date">Ngày Hoàn thành:</label><input type="date" id="activity-date" required></div>
-                                <div class="form-group" style="flex: 1;"><label for="role" data-translate="l_role">Vai trò:</label>
-                                    <select id="role" required onchange="updateImpactPreview()">
-                                        <option value="leader" data-translate="role_leader">Trưởng nhóm/Quản lý</option>
-                                        <option value="member" data-translate="role_member">Thành viên cốt cán</option>
-                                        <option value="presenter" data-translate="role_presenter">Thuyết trình</option>
-                                        <option value="participant" data-translate="role_participant">Học viên/Tham gia</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <h3 data-translate="h3_skills_weight" style="margin-top: 30px; color: var(--color-primary);">2. Kỹ năng & Trọng số</h3>
-                            <div class="form-group">
-                                <label data-translate="l_skills">Kỹ năng phát triển (Chọn tối đa 3):</label>
-                                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
-                                    <label><input type="checkbox" name="skill" value="Leadership" onchange="updateImpactPreview()"><span data-translate="skill_leadership"> Lãnh đạo</span></label>
-                                    <label><input type="checkbox" name="skill" value="Communication" onchange="updateImpactPreview()"><span data-translate="skill_communication"> Giao tiếp</span></label>
-                                    <label><input type="checkbox" name="skill" value="Teamwork" onchange="updateImpactPreview()"><span data-translate="skill_teamwork"> Làm việc nhóm</span></label>
-                                    <label><input type="checkbox" name="skill" value="ProblemSolving" onchange="updateImpactPreview()"><span data-translate="skill_problemsolving"> Giải quyết VĐ</span></label>
-                                </div>
-                            </div>
+            <div class="form-group">
+                <label for="activitySkill">Kỹ năng Chính được Đo lường (Mock):</label>
+                <select id="activitySkill" required>
+                    <option value="">-- Chọn một kỹ năng --</option>
+                    <option value="Teamwork">Teamwork (Làm việc nhóm)</option>
+                    <option value="Leadership">Leadership (Lãnh đạo)</option>
+                    <option value="ProblemSolving">Giải quyết Vấn đề</option>
+                    <option value="Communication">Giao tiếp</option>
+                </select>
+            </div>
 
-                            <div class="form-group">
-                                <label for="challenge" data-translate="l_challenge">Mức độ Thử thách cá nhân (1 - Thấp, 5 - Cao):</label>
-                                <input type="range" id="challenge" min="1" max="5" value="3" oninput="document.getElementById('challenge-value').innerText = this.value; updateImpactPreview()">
-                                <p style="text-align: center;"><span data-translate="p_current_level">Mức độ hiện tại</span>: <span id="challenge-value" style="font-weight: 700; color: var(--color-primary);">3</span></p>
-                            </div>
-                            
-                            <!-- TRƯỜNG TẢI LÊN MINH CHỨNG -->
-                            <h3 data-translate="h3_verification" style="margin-top: 30px; color: var(--color-primary);">3. Xác minh & Minh chứng</h3>
-                            <div class="form-group">
-                                <label for="attachment" data-translate="l_attachment">Tệp đính kèm/Minh chứng (Tối đa 2MB):</label>
-                                <input type="file" id="attachment" accept=".pdf, .jpg, .png" onchange="updateImpactPreview()">
-                                <p style="font-size: 0.8em; color: var(--color-text-dark); margin-top: 5px;" data-translate="p_attachment_sub">*Tải lên chứng nhận hoặc ảnh để tăng **25%** độ tin cậy của điểm.</p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="supervisor-email" data-translate="l_supervisor_email">Email Giám sát (Tùy chọn):</label>
-                                <input type="email" id="supervisor-email" data-translate="ph_supervisor_email" placeholder="Email của Trưởng nhóm/Giảng viên">
-                                <p style="font-size: 0.8em; color: var(--color-text-dark); margin-top: 5px;" data-translate="p_supervisor_sub">*Giúp xác thực vai trò, tăng **20%** độ tin cậy của điểm.</p>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description" data-translate="l_description">Mô tả ngắn gọn về công việc/kết quả (Dùng cho CV):</label>
-                                <textarea id="description" rows="4" required data-translate="ph_description" placeholder="Nêu bối cảnh (S), nhiệm vụ (T), hành động (A) và kết quả (R) bằng số liệu."></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary" style="margin-top: 20px;" data-translate="cta_save_score">
-                                <i class="fas fa-save"></i> Lưu & Tính Điểm Kỹ Năng
-                            </button>
-                            <a href="dashboard.html" class="btn btn-link" style="margin-left: 20px;" data-translate="cta_cancel">Hủy bỏ</a>
-                        </form>
-                    </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="activityDate">Ngày hoàn thành (Mock):</label>
+                    <input type="date" id="activityDate" required>
                 </div>
-
-                <div style="flex: 1;">
-                    <div class="activity-box glass-box" style="padding: 30px; margin-bottom: 30px;">
-                        <h3 data-translate="h3_preview_impact" style="color: var(--color-primary); margin-top: 0;">Preview: Tác động Tức thời</h3>
-                        <p data-translate="p_preview_impact" style="font-size: 0.9em; margin-bottom: 15px;">Xem điểm kỹ năng ước tính sẽ tăng lên.</p>
-                        
-                        <div style="height: 200px;"><canvas id="impactMiniChart"></canvas></div>
-                        
-                        <div style="margin-top: 20px; font-weight: 600;">
-                            <p data-translate="preview_role">Vai trò Hiện tại: <span id="preview-role-impact">Trưởng nhóm (+0.5đ)</span></p>
-                            <p data-translate="preview_challenge">Thử thách Cá nhân: <span id="preview-challenge-impact">+0.3đ)</span></p>
-                            <p data-translate="preview_attachment">Tệp Đính kèm: <span id="preview-attachment-impact">Không (+0.0đ)</span></p>
-                        </div>
-                        
-                        <div class="reco-box" style="margin-top: 20px; border-left: 5px solid var(--color-accent);">
-                             <h4 data-translate="h4_formula" style="font-size: 1em; margin-bottom: 5px;">Gợi ý Công thức Tính Điểm:</h4>
-                             <p data-translate="p_formula" style="font-size: 0.9em; line-height: 1.4;">**Điểm Tăng** = **Điểm Cơ sở** (0.1) + **Vai trò** (max 0.5) + **Thử thách** (max 0.5) + **Chứng minh** (max 0.2)</p>
-                        </div>
-                    </div>
-                    
-                    <div class="reco-box" style="border-left: 5px solid var(--color-primary);">
-                        <h3 data-translate="h3_guide_title" style="font-size: 1.2em; margin-bottom: 5px;">Hướng dẫn: Dữ liệu chất lượng</h3>
-                        <p data-translate="p_guide_role" style="font-size: 0.9em; margin-bottom: 5px;">- Chọn **"Trưởng nhóm"** khi bạn có trách nhiệm quản lý kết quả cuối cùng.</p>
-                        <p data-translate="p_guide_result" style="font-size: 0.9em;">- Mô tả **"Kết quả"** bằng số liệu (ví dụ: "Tăng 10% hiệu suất").</p>
-                    </div>
+                <div class="form-group">
+                    <label for="activityPoints">Điểm tự đánh giá (10-100):</label>
+                    <input type="number" id="activityPoints" min="10" max="100" required value="75">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="activityDescription">Mô tả (Vai trò, Kết quả):</label>
+                <textarea id="activityDescription" required placeholder="Sử dụng phương pháp STAR để mô tả vai trò và kết quả đạt được."></textarea>
             </div>
             
-        </main>
+            <button type="submit" class="btn-primary" style="width: 100%;"><i class="fas fa-save"></i> Lưu & Cập nhật Dashboard</button>
+            <div id="messageOutput"></div>
+        </form>
     </div>
 
     <script>
-        // BẢNG DỊCH CHO ACTIVITY PAGE
-        const ActivityTranslations = {
-            vi: {
-                title_activity: "Ghi nhận Hoạt động - Future Xion", h1_activity: "Ghi nhận Hoạt động Mới",
-                h3_info_role: "1. Thông tin Cơ bản & Vai trò", l_activity_name: "Tên Hoạt động:", ph_activity_name: "Ví dụ: Dự án 'Green Campus'",
-                l_activity_date: "Ngày Hoàn thành:", l_role: "Vai trò:",
-                role_leader: "Trưởng nhóm/Quản lý", role_member: "Thành viên cốt cán", role_presenter: "Thuyết trình", role_participant: "Học viên/Tham gia",
-                h3_skills_weight: "2. Kỹ năng & Trọng số", l_skills: "Kỹ năng phát triển (Chọn tối đa 3):",
-                skill_leadership: "Lãnh đạo", skill_communication: "Giao tiếp", skill_teamwork: "Làm việc nhóm", skill_problemsolving: "Giải quyết VĐ",
-                l_challenge: "Mức độ Thử thách cá nhân (1 - Thấp, 5 - Cao):", p_current_level: "Mức độ hiện tại",
-                h3_verification: "3. Xác minh & Minh chứng", l_attachment: "Tệp đính kèm/Minh chứng (Tối đa 2MB):",
-                p_attachment_sub: "*Tải lên chứng nhận hoặc ảnh để tăng **25%** độ tin cậy của điểm.",
-                l_supervisor_email: "Email Giám sát (Tùy chọn):", ph_supervisor_email: "Email của Trưởng nhóm/Giảng viên",
-                p_supervisor_sub: "*Giúp xác thực vai trò, tăng **20%** độ tin cậy của điểm.",
-                l_description: "Mô tả ngắn gọn về công việc/kết quả (Dùng cho CV):", ph_description: "Nêu bối cảnh (S), nhiệm vụ (T), hành động (A) và kết quả (R) bằng số liệu.",
-                cta_save_score: "Lưu & Tính Điểm Kỹ Năng", cta_cancel: "Hủy bỏ",
-                h3_preview_impact: "Preview: Tác động Tức thời", p_preview_impact: "Xem điểm kỹ năng ước tính sẽ tăng lên.",
-                h4_formula: "Gợi ý Công thức Tính Điểm:", p_formula: "**Điểm Tăng** = **Điểm Cơ sở** (0.1) + **Vai trò** (max 0.5) + **Thử thách** (max 0.5) + **Chứng minh** (max 0.2)",
-                h3_guide_title: "Hướng dẫn: Dữ liệu chất lượng", p_guide_role: "- Chọn **\"Trưởng nhóm\"** khi bạn có trách nhiệm quản lý kết quả cuối cùng.",
-                p_guide_result: "- Mô tả **\"Kết quả\"** bằng số liệu (ví dụ: \"Tăng 10% hiệu suất\").",
-                
-                // MOCKUP PREVIEW TEXT
-                preview_role: "Vai trò Hiện tại: ", preview_challenge: "Thử thách Cá nhân: ", preview_attachment: "Tệp Đính kèm: ",
-                role_impact_leader: "Trưởng nhóm", role_impact_member: "Thành viên cốt cán", role_impact_presenter: "Thuyết trình", role_impact_participant: "Tham gia",
-                impact_has_file: "Có Tệp", impact_no_file: "Không",
-                
-                // Menu
-                menu_dashboard: "Dashboard", menu_activity: "Ghi nhận Hoạt động", menu_report: "Hồ sơ Kỹ năng (CV)", menu_settings: "Cài đặt", menu_logout: "Đăng xuất"
-            },
-            en: {
-                title_activity: "Log Activity - Future Xion", h1_activity: "Log New Activity",
-                h3_info_role: "1. Basic Info & Role", l_activity_name: "Activity Name:", ph_activity_name: "Ex: 'Green Campus' Project",
-                l_activity_date: "Completion Date:", l_role: "Your Role:",
-                role_leader: "Leader/Manager", role_member: "Core Member", role_presenter: "Presenter", role_participant: "Learner/Participant",
-                h3_skills_weight: "2. Skills & Weighting", l_skills: "Skills developed (Max 3):",
-                skill_leadership: "Leadership", skill_communication: "Communication", skill_teamwork: "Teamwork", skill_problemsolving: "Problem Solving",
-                l_challenge: "Personal Challenge Level (1 - Low, 5 - High):", p_current_level: "Current Level",
-                h3_verification: "3. Verification & Evidence", l_attachment: "Attachment/Evidence (Max 2MB):",
-                p_attachment_sub: "*Uploading a certificate or photo increases score reliability by **25%**.",
-                l_supervisor_email: "Supervisor Email (Optional):", ph_supervisor_email: "Leader/Lecturer's Email",
-                p_supervisor_sub: "*Helps validate role, increasing score reliability by **20%**.",
-                l_description: "Brief description of work/results (For CV):", ph_description: "State Context (S), Task (T), Action (A), and Result (R) using metrics.",
-                cta_save_score: "Save & Calculate Skill Score", cta_cancel: "Cancel",
-                h3_preview_impact: "Preview: Immediate Impact", p_preview_impact: "View estimated skill score increase.",
-                h4_formula: "Suggested Score Formula:", p_formula: "**Score Increase** = **Base Score** (0.1) + **Role** (max 0.5) + **Challenge** (max 0.5) + **Evidence** (max 0.2)",
-                h3_guide_title: "Guide: Quality Data", p_guide_role: "- Select **\"Leader\"** when you are responsible for the final outcome.",
-                p_guide_result: "- Describe **\"Results\"** with metrics (e.g., \"Increased efficiency by 10%\").",
-                
-                // MOCKUP PREVIEW TEXT
-                preview_role: "Current Role: ", preview_challenge: "Personal Challenge: ", preview_attachment: "Attachment: ",
-                role_impact_leader: "Leader", role_impact_member: "Core Member", role_impact_presenter: "Presenter", role_impact_participant: "Participant",
-                impact_has_file: "Has File", impact_no_file: "No File",
-
-                // Menu
-                menu_dashboard: "Dashboard", menu_activity: "Log Activity", menu_report: "Skill Profile (CV)", menu_settings: "Settings", menu_logout: "Logout"
-            }
-        };
-        
-        // Hàm chính để áp dụng ngôn ngữ (Được gọi khi tải trang)
-        function applyLanguageActivity() {
-            const currentLang = localStorage.getItem('language') || 'vi';
-            const t = ActivityTranslations[currentLang];
-            
-            // 1. Cập nhật các phần tử có data-translate
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (t[key]) {
-                    if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                        element.placeholder = t[key];
-                    } else if (element.tagName === 'TEXTAREA' && element.hasAttribute('placeholder')) {
-                         element.placeholder = t[key];
-                    } else if (element.tagName === 'TITLE') {
-                        document.title = t[key];
-                    } else if (key.includes('cta')) {
-                        // Giữ lại icon
-                        const icon = element.querySelector('i');
-                        element.textContent = t[key];
-                        if (icon) element.prepend(icon);
-                    } else if (key.includes('menu_')) {
-                        // Xử lý menu sidebar
-                        const icon = element.querySelector('i');
-                        element.innerHTML = icon.outerHTML + ' ' + t[key];
-                    } else {
-                        element.textContent = t[key];
-                    }
-                }
-            });
-            
-            // 2. Cập nhật Preview Impact (vì nó dùng JS để render)
-            updateImpactPreview(currentLang);
-        }
-
-        // Khởi tạo Mini Chart
-        let impactChart;
-        const initialImpactData = [0.1, 0.1, 0.1, 0.1]; // Khởi tạo điểm thấp
-
-        function initializeChart() {
-            const ctx = document.getElementById('impactMiniChart').getContext('2d');
-            impactChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Teamwork', 'Lead.', 'Comm.', 'Prob.S.'],
-                    datasets: [{
-                        label: 'Tác động ước tính',
-                        data: initialImpactData,
-                        backgroundColor: 'rgba(90, 24, 154, 0.5)',
-                        borderColor: 'var(--color-primary)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { suggestedMin: 0, suggestedMax: 1.2, ticks: { stepSize: 0.3 }, grid: { display: false } }, 
-                        x: { grid: { display: false } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        // Cập nhật Mini Chart (Chức năng XỊN) và nội dung preview
-        function updateImpactPreview(langOverride) {
-            const currentLang = langOverride || localStorage.getItem('language') || 'vi';
-            const t = ActivityTranslations[currentLang];
-            
-            const role = document.getElementById('role').value;
-            const challenge = parseInt(document.getElementById('challenge').value);
-            const selectedSkills = Array.from(document.querySelectorAll('input[name="skill"]:checked')).map(cb => cb.value);
-            const attachmentFile = document.getElementById('attachment').files.length > 0;
-
-            let roleScore = 0.1; 
-            let roleKey = 'role_impact_participant';
-            if (role === 'leader') { roleScore = 0.5; roleKey = 'role_impact_leader'; }
-            else if (role === 'member') { roleScore = 0.3; roleKey = 'role_impact_member'; }
-            else if (role === 'presenter') { roleScore = 0.2; roleKey = 'role_impact_presenter'; }
-            
-            const challengeScore = challenge * 0.1; // Max 0.5
-            const attachmentBonus = attachmentFile ? 0.2 : 0.0; // Bonus 0.2 điểm cho tệp đính kèm
-            const attachmentText = attachmentFile ? t.impact_has_file : t.impact_no_file;
-            
-            // Cập nhật text preview
-            document.querySelector('[data-translate="preview_role"]').innerHTML = `${t.preview_role} <span id="preview-role-impact">${t[roleKey]} (+${roleScore.toFixed(1)}đ)</span>`;
-            document.querySelector('[data-translate="preview_challenge"]').innerHTML = `${t.preview_challenge} <span id="preview-challenge-impact">+${challengeScore.toFixed(1)}đ</span>`;
-            document.querySelector('[data-translate="preview_attachment"]').innerHTML = `${t.preview_attachment} <span id="preview-attachment-impact">${attachmentText} (+${attachmentBonus.toFixed(1)}đ)</span>`;
-
-            // Tính tổng tác động (Base Score 0.1)
-            const totalImpact = 0.1 + roleScore + challengeScore + attachmentBonus;
-
-            // Áp dụng điểm mới vào biểu đồ
-            const newImpacts = impactChart.data.labels.map(label => 0.1); // Reset base
-            
-            selectedSkills.forEach(skill => {
-                const index = impactChart.data.labels.findIndex(l => l.includes(skill.substring(0, 4))); 
-                if (index !== -1) {
-                    newImpacts[index] = totalImpact; 
-                }
-            });
-
-            impactChart.data.datasets[0].data = newImpacts;
-            impactChart.update();
-        }
-
-        document.getElementById('activity-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Loại bỏ alert và chuyển hướng trực tiếp
-            window.location.href = 'dashboard.html';
-        });
-
-        // Khởi tạo khi DOM sẵn sàng
         document.addEventListener('DOMContentLoaded', () => {
-            initializeChart();
-            // Lắng nghe thay đổi trên các trường chính
-            document.getElementById('role').addEventListener('change', updateImpactPreview);
-            document.getElementById('attachment').addEventListener('change', updateImpactPreview); // Thêm listener cho file
-            
-            // Thêm listeners cho các checkbox skill
-            document.querySelectorAll('input[name="skill"]').forEach(checkbox => {
-                checkbox.addEventListener('change', updateImpactPreview);
-            });
-            // Bổ sung: Hàm applyLanguageActivity được gọi trong body onload
-            
-            // Cần chạy updatePreview ban đầu sau khi initialize chart và apply language
-            // Đã chuyển sang onload
+            // Có thể thêm logic kiểm tra đăng nhập tại đây
         });
+
+        // Hàm chính để lưu dữ liệu vào localStorage
+        function saveActivity(event) {
+            event.preventDefault(); // Ngăn form gửi đi
+
+            const form = document.getElementById('activityForm');
+            const messageOutput = document.getElementById('messageOutput');
+            const userName = localStorage.getItem('currentUser') || 'Unknown User'; // Lấy tên người dùng
+
+            // 1. Lấy dữ liệu từ Form
+            const newActivity = {
+                id: Date.now(),
+                user: userName,
+                name: document.getElementById('activityName').value,
+                skill: document.getElementById('activitySkill').value,
+                date: document.getElementById('activityDate').value,
+                points: parseInt(document.getElementById('activityPoints').value),
+                description: document.getElementById('activityDescription').value
+            };
+
+            // 2. Tải danh sách hoạt động hiện có (hoặc mảng rỗng nếu chưa có)
+            const activitiesJson = localStorage.getItem('userActivities');
+            let activities = activitiesJson ? JSON.parse(activitiesJson) : [];
+            
+            // 3. Thêm hoạt động mới vào đầu mảng (để hiển thị mới nhất trước)
+            activities.unshift(newActivity);
+
+            // 4. Lưu lại danh sách cập nhật vào localStorage
+            localStorage.setItem('userActivities', JSON.stringify(activities));
+            
+            // 5. Hiển thị thông báo thành công
+            messageOutput.innerHTML = `<div class="message success"><i class="fas fa-check-circle"></i> Đã ghi nhận thành công! Dashboard sẽ được cập nhật.</div>`;
+            
+            // Tùy chọn: Xóa form sau khi lưu
+            form.reset();
+            
+            // Tùy chọn: Tự động chuyển về Dashboard sau 2 giây để xem kết quả
+            setTimeout(() => {
+                 window.location.href = 'onboarding.html';
+            }, 2000);
+        }
     </script>
 
 </body>
