@@ -4,10 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-translate="title_history">Lịch sử Hoạt động - Future Xion</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS TÍCH HỢP TỪ DASHBOARD (KHÔNG DÙNG styles.css) */
+        :root {
+            --color-primary: #5A189A;
+            --color-accent: #4F9AFF;
+            --color-callout: #FFD700;
+            --glass-background: rgba(255, 255, 255, 0.6);
+            --color-white: #ffffff;
+            --color-background-light: #f7f7f7;
+            --color-background-muted: #ececec;
+            --color-text-dark: #333;
+            --color-text-medium: #555;
+            --border-color: #ddd;
+            --color-error: #dc3545; /* Đỏ lỗi */
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-background-light);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+        
+        a { text-decoration: none; color: var(--color-primary); }
+        .primary-color { color: var(--color-primary); }
+        .accent-color { color: var(--color-accent); }
+        .color-text-dark { color: var(--color-text-dark); }
+        .color-text-medium { color: var(--color-text-medium); }
+        .font-weight-700 { font-weight: 700; }
+        .stat-sub-text { font-size: 0.9em; }
+
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar - Đồng bộ */
+        .sidebar {
+            width: 250px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar .logo { font-size: 1.8em; font-weight: 700; margin-bottom: 40px; }
+        .sidebar .logo-xion { color: var(--color-accent); }
+        
+        .sidebar nav a {
+            display: block; color: var(--color-white); padding: 12px 10px; margin-bottom: 5px;
+            border-radius: 8px; transition: background-color 0.2s; font-weight: 500;
+        }
+        .sidebar nav a:hover, .sidebar nav a.active { background-color: rgba(255, 255, 255, 0.2); }
+        .sidebar nav i { margin-right: 10px; }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: var(--color-background-light);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5em; }
+        
+        /* Buttons */
+        .btn { border: none; border-radius: 8px; cursor: pointer; padding: 10px 15px; font-weight: 600; transition: background-color 0.2s; }
+        .btn-link { color: var(--color-accent); font-weight: 500; }
+
+        /* Content & Glass Box */
+        .glass-box {
+            background: var(--glass-background);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        /* History List Styles */
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .history-item {
+            background: var(--color-white);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--color-primary);
+        }
+        .history-item h4 {
+            margin-bottom: 5px;
+            color: var(--color-text-dark);
+        }
+        .history-item p {
+            font-size: 0.9em;
+            color: var(--color-text-medium);
+            margin-bottom: 5px;
+        }
+        .history-score {
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+        
+    </style>
 </head>
-<body onload="applyLanguageHistory()">
+<body onload="applyLanguageHistory(); loadHistoryData();">
     
     <div class="dashboard-layout">
         <aside class="sidebar">
@@ -17,28 +136,22 @@
                 <a href="activity.html" data-translate="menu_activity"><i class="fas fa-pen-nib"></i> Ghi nhận Hoạt động</a>
                 <a href="report.html" data-translate="menu_report"><i class="fas fa-file-alt"></i> Hồ sơ Kỹ năng (CV)</a>
                 <a href="settings.html" data-translate="menu_settings"><i class="fas fa-cog"></i> Cài đặt</a>
-                <a href="auth.html" data-translate="menu_logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                <a href="auth.html" data-translate="menu_logout" onclick="localStorage.clear();"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="dashboard-header"><h1 data-translate="h1_history">Lịch sử Hoạt động Chi tiết</h1></div>
+            <div class="dashboard-header">
+                <h1 data-translate="h1_history">Lịch sử Hoạt động Chi tiết</h1>
+            </div>
+
             <div class="glass-box">
-                <ul class="history-list">
-                    <li class="history-item">
-                        <h4 data-translate="item1_title">Dự án Green Campus (Trưởng nhóm)</h4>
-                        <p data-translate="item1_skills" style="font-weight: 600;">Kỹ năng: Lãnh đạo, Giải quyết Vấn đề. Điểm tác động: 5/5</p>
-                        <p data-translate="item1_narrative">Narrative: Đã dẫn dắt nhóm 5 người, hoàn thành dự án đúng hạn, vượt mục tiêu 10%. Rất tốt để dùng trong CV.</p>
-                        <a href="activity.html" class="btn-link" style="color: var(--color-accent);" data-translate="cta_edit_detail">Sửa/Cập nhật thêm chi tiết</a>
-                    </li>
-                    <li class="history-item">
-                        <h4 data-translate="item2_title">Khóa học Communication Skills</h4>
-                        <p data-translate="item2_skills" style="font-weight: 600;">Kỹ năng: Giao tiếp, Tư duy Phản biện. Điểm tác động: 3/5</p>
-                        <p data-translate="item2_narrative">Narrative: Hoàn thành 10 module thuyết trình, vượt qua bài kiểm tra cuối khóa.</p>
-                        <a href="activity.html" class="btn-link" style="color: var(--color-accent);" data-translate="cta_edit_detail">Sửa/Cập nhật thêm chi tiết</a>
-                    </li>
-                </ul>
-                <p data-translate="p_history_footer" style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]</p>
+                <ul id="history-list-output" class="history-list">
+                    </ul>
+                
+                <p id="empty-message" class="color-text-medium" style="text-align: center; margin-top: 20px; display: none;">Chưa có hoạt động nào được ghi nhận. Hãy <a href="activity.html" class="btn-link">Ghi nhận Hoạt động Đầu tiên</a>.</p>
+                
+                <p data-translate="p_history_footer" class="color-text-medium" style="margin-top: 20px;">[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]</p>
             </div>
         </main>
     </div>
@@ -52,7 +165,7 @@
                 item1_narrative: "Narrative: Đã dẫn dắt nhóm 5 người, hoàn thành dự án đúng hạn, vượt mục tiêu 10%. Rất tốt để dùng trong CV.",
                 item2_title: "Khóa học Communication Skills", item2_skills: "Kỹ năng: Giao tiếp, Tư duy Phản biện. Điểm tác động: 3/5",
                 item2_narrative: "Narrative: Hoàn thành 10 module thuyết trình, vượt qua bài kiểm tra cuối khóa.",
-                cta_edit_detail: "Sửa/Cập nhật thêm chi tiết", p_history_footer: "[Liên kết này hoạt động, chứng minh luồng lịch sử dữ liệu!]"
+                cta_edit_detail: "Sửa/Cập nhật thêm chi tiết", p_history_footer: "[Lịch sử Hoạt động được tải từ dữ liệu đã ghi nhận]"
             },
             en: {
                 title_history: "Activity History - Future Xion", h1_history: "Detailed Activity History",
@@ -61,12 +174,12 @@
                 item1_narrative: "Narrative: Led a team of 5, completed the project on time, exceeded targets by 10%. Excellent for CV use.",
                 item2_title: "Communication Skills Course", item2_skills: "Skills: Communication, Critical Thinking. Impact Score: 3/5",
                 item2_narrative: "Narrative: Completed 10 presentation modules, passed final exam.",
-                cta_edit_detail: "Edit/Update Details", p_history_footer: "[This link works, proving the data history flow!]"
+                cta_edit_detail: "Edit/Update Details", p_history_footer: "[Activity history loaded from recorded data]"
             }
         };
 
-        function applyLanguageHistory() {
-            const currentLang = localStorage.getItem('language') || 'vi';
+        function applyLanguageHistory(lang) {
+            const currentLang = lang || localStorage.getItem('language') || 'vi';
             document.title = HistoryTranslations[currentLang].title_history;
             const t = HistoryTranslations[currentLang];
             
@@ -74,13 +187,7 @@
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
                 if (t[key]) {
-                    if (key.includes('cta_')) {
-                        // Giữ lại icon nếu có
-                        const icon = element.querySelector('i');
-                        element.textContent = t[key];
-                        if (icon) element.prepend(icon);
-                    } else if (key.includes('menu_')) {
-                        // Xử lý menu sidebar
+                    if (key.includes('menu_')) {
                         const icon = element.querySelector('i');
                         element.innerHTML = icon.outerHTML + ' ' + t[key];
                     } else {
@@ -90,7 +197,57 @@
             });
         }
         
-        document.addEventListener('DOMContentLoaded', applyLanguageHistory);
+        // HÀM MỚI: Tải dữ liệu từ localStorage và hiển thị
+        function loadHistoryData() {
+            const activitiesJson = localStorage.getItem('userActivities');
+            const historyList = document.getElementById('history-list-output');
+            const emptyMessage = document.getElementById('empty-message');
+            const t = HistoryTranslations[localStorage.getItem('language') || 'vi'];
+            
+            historyList.innerHTML = ''; 
+
+            if (!activitiesJson) {
+                emptyMessage.style.display = 'block';
+                return;
+            }
+
+            try {
+                const activities = JSON.parse(activitiesJson);
+
+                if (activities.length === 0) {
+                    emptyMessage.style.display = 'block';
+                    return;
+                }
+
+                emptyMessage.style.display = 'none';
+
+                activities.forEach(activity => {
+                    // Chuyển điểm 10-100 thành điểm 5pt cho hiển thị
+                    const score5pt = (activity.points / 100 * 5).toFixed(1); 
+                    
+                    const item = document.createElement('li');
+                    item.className = 'history-item';
+                    item.innerHTML = `
+                        <h4><i class="fas fa-calendar-alt" style="margin-right: 5px;"></i> ${activity.name}</h4>
+                        <p class="history-score">Điểm: ${score5pt} / 5.0</p>
+                        <p class="color-text-dark" style="font-weight: 600;">Kỹ năng: ${activity.skill}</p>
+                        <p class="color-text-medium">Ngày hoàn thành: ${activity.date}</p>
+                        <p class="stat-sub-text color-text-medium">Mô tả: ${activity.description || 'Không có mô tả chi tiết.'}</p>
+                        <a href="activity.html?edit=${activity.id}" class="btn-link" style="margin-top: 10px; display: inline-block;">${t.cta_edit_detail}</a>
+                    `;
+                    historyList.appendChild(item);
+                });
+
+            } catch (e) {
+                console.error("Lỗi tải lịch sử hoạt động:", e);
+                emptyMessage.textContent = 'Lỗi tải dữ liệu. Hãy thử đăng nhập lại.';
+                emptyMessage.style.display = 'block';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply language on load (called by body onload)
+        });
     </script>
 </body>
 </html>
