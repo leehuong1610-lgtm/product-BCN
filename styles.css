@@ -242,7 +242,7 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s;
 }
-.stat-card:hover { transform: translateY(-3px); }
+.stat-card:hover { transform: translateY(-9px); }
 
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
 .feature-flex-container, .value-prop-flex-container { display: flex; gap: 30px; justify-content: space-between; margin-top: 30px; }
@@ -375,3 +375,48 @@ input:checked + .slider:before { transform: translateX(20px); }
     .navbar-container { flex-direction: column; gap: 10px; }
     .main-nav { flex-direction: column; }
 }
+
+/* ... (GIỮ NGUYÊN CÁC PHẦN TRƯỚC) ... */
+
+/* =========================================================================
+   REPORT PAGE (report.html)
+   ========================================================================= */
+/* Màu sắc Tốt (Proficient) */
+.status-proficient {
+    border-left: 5px solid var(--color-accent); /* Màu xanh là màu Proficient */
+}
+.status-proficient-text {
+    color: var(--color-accent);
+}
+
+/* Màu sắc Cần cải thiện (Needs Improvement) */
+.status-needs-improvement {
+    border-left: 5px solid var(--color-error); /* Màu đỏ là màu Error */
+}
+.status-needs-improvement-text {
+    color: var(--color-error);
+}
+
+/* Report Content Layout */
+.report-content-grid {
+    display: grid; 
+    grid-template-columns: 3fr 2fr; /* Chia 3/2 như yêu cầu của bạn */
+    gap: 40px;
+    margin-top: 20px;
+}
+.report-section-header {
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.skill-card-report {
+    background-color: var(--color-white); /* Nền trắng cho nổi bật */
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* (Các style khác giữ nguyên) */
