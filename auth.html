@@ -10,37 +10,72 @@
 </head>
 <body class="auth-page">
 
-    <div class="auth-box">
+    <div class="auth-box glass-box">
         <div id="auth-content-area"></div>
     </div>
     
     <script>
         const authContentArea = document.getElementById('auth-content-area');
 
-        // Hàm hỗ trợ tạo label
+        // Hàm hỗ trợ tạo label (giữ inline styles tối thiểu cho khả năng đọc)
         const createLabel = (text) => `<label style="display: block; text-align: left; font-size: 0.9em; margin-bottom: 5px; color: var(--color-text-dark);">${text}</label>`;
 
-        // --- 1. LOGIN (FRAME 166 - Cải tiến giao diện) ---
+        // --- HÀM XỬ LÝ DỮ LIỆU HOẠT ĐỘNG ---
+        function saveActivityData(userName, isNewUser = false) {
+            let activities = [];
+
+            if (!isNewUser) {
+                const activitiesJson = localStorage.getItem('userActivities');
+                activities = activitiesJson ? JSON.parse(activitiesJson) : [];
+
+                if (activities.length === 0) {
+                     isNewUser = true;
+                }
+            }
+            
+            if (isNewUser) {
+                 // Thiết lập mảng rỗng cho người dùng mới
+                 localStorage.setItem('userActivities', JSON.stringify([]));
+            } else {
+                 // Đăng nhập: Mô phỏng thêm hoạt động đăng nhập
+                 const newActivity = {
+                    id: Date.now(),
+                    user: userName,
+                    name: "Hoạt động Đăng nhập Hệ thống",
+                    skill: "System Management",
+                    date: new Date().toLocaleDateString('vi-VN'),
+                    points: 10
+                 };
+                 activities.push(newActivity);
+                 localStorage.setItem('userActivities', JSON.stringify(activities));
+            }
+        }
+        // -------------------------------------------------------------------
+
+        // --- 1. LOGIN (FRAME 166) ---
         const getLoginFrame = () => `
-            <div class="icon-lock" style="font-size: 3em;"><i class="fas fa-sun"></i></div>
+            <div class="icon-lock"><i class="fas fa-sun"></i></div>
             <h2>CHÀO MỪNG TRỞ LẠI!</h2>
             <p class="subtitle">Đăng nhập để truy cập Dashboard và hồ sơ kỹ năng của bạn.</p>
             
             <form onsubmit="handleAuthSubmit(event, 'login')">
                 <div class="form-group">
-                    ${createLabel('Email hoặc Số điện thoại')}
-                    <input type="text" id="login-email" placeholder="Nhập email hoặc số điện thoại" required>
+                    ${createLabel('Tên người dùng')}
+                    <input type="text" id="login-email" placeholder="Usename" required>
                 </div>
                 <div class="form-group">
                     ${createLabel('Mật khẩu')}
                     <input type="password" id="login-password" placeholder="********" required>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                        <label style="font-size: 0.9em; color: var(--color-text-medium);"><input type="checkbox"> Remember me</label>
-                        <a href="#" onclick="renderFrame('forgot')" class="link-small" style="text-decoration: none;">Forgot password?</a>
+                    
+                    <div class="remember-forgot-container">
+                        <label class="custom-checkbox-label">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" onclick="renderFrame('forgot')" class="btn-link color-primary" style="font-weight: 500;">Forgot password?</a>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-submit-primary btn-submit-email" style="width: 100%; margin-top: 20px;">Log in</button>
+                <button type="submit" class="btn btn-primary btn-submit-primary" style="width: 100%; margin-top: 20px;">Log in</button>
                 
                 <div class="auth-separator">Or</div>
                 
@@ -49,14 +84,14 @@
                 </button>
             </form>
 
-            <p class="auth-footer" style="margin-top: 30px;">
-                Don't have an account? <a href="#" onclick="renderFrame('register')" class="link-small" style="font-weight: 700; margin-left: 5px; text-decoration: none;">Sign up</a>
+            <p class="auth-footer color-text-medium" style="margin-top: 30px; font-size: 0.9em;">
+                Don't have an account? <a href="#" onclick="renderFrame('register')" class="link-small color-primary" style="font-weight: 700; margin-left: 5px;">Sign up</a>
             </p>
         `;
 
-        // --- 2. REGISTER (FRAME 167 - Bổ sung thông tin) ---
+        // --- 2. REGISTER (FRAME 167) ---
         const getRegisterFrame = () => `
-            <div class="icon-lock" style="font-size: 3em;"><i class="fas fa-user-circle"></i></div>
+            <div class="icon-lock"><i class="fas fa-user-circle"></i></div>
             <h2>Create Account</h2>
             <p class="subtitle">Đăng ký để bắt đầu đo lường kỹ năng mềm của bạn.</p>
             
@@ -65,7 +100,6 @@
                 <div class="form-group">${createLabel('Username')}<input type="text" id="reg-username" placeholder="Username" required></div>
                 <div class="form-group">${createLabel('Email')}<input type="email" id="reg-email" placeholder="Email" required></div>
                 
-                <!-- BỔ SUNG TRƯỜNG THÔNG TIN YÊU CẦU -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                      <div class="form-group" style="margin-bottom: 0;">${createLabel('Ngày sinh')}<input type="date" id="reg-dob" required></div>
                      <div class="form-group" style="margin-bottom: 0;">${createLabel('Giới tính')}
@@ -78,15 +112,13 @@
                     </div>
                 </div>
                 <div class="form-group" style="margin-top: 20px;">${createLabel('Trường Đại học')}<input type="text" id="reg-university" placeholder="Tên Trường Đại học" required></div>
-                <!-- KẾT THÚC BỔ SUNG -->
-                
                 <div class="form-group">${createLabel('Mật khẩu')}<input type="password" id="reg-password" placeholder="Password" required></div>
                 
-                <label style="display: block; font-size: 0.9em; text-align: left; margin-top: -10px; margin-bottom: 15px; color: var(--color-text-medium);">
+                <label class="custom-checkbox-label" style="text-align: left; margin-top: -10px; margin-bottom: 15px;">
                     <input type="checkbox" required> I agree to all terms and Privacy Policy
                 </label>
 
-                <button type="submit" class="btn btn-submit-primary btn-submit-email" style="width: 100%;">Sign up</button>
+                <button type="submit" class="btn btn-primary btn-submit-primary" style="width: 100%;">Sign up</button>
                 
                 <div class="auth-separator">Or</div>
                 
@@ -95,8 +127,8 @@
                 </button>
             </form>
 
-            <p class="auth-footer" style="margin-top: 30px;">
-                Already have an account? <a href="#" onclick="renderFrame('login')" class="link-small" style="font-weight: 700; margin-left: 5px; text-decoration: none;">Log in</a>
+            <p class="auth-footer color-text-medium" style="margin-top: 30px; font-size: 0.9em;">
+                Already have an account? <a href="#" onclick="renderFrame('login')" class="link-small color-primary" style="font-weight: 700; margin-left: 5px;">Log in</a>
             </p>
         `;
 
@@ -114,7 +146,7 @@
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Send email</button>
                 
-                <a href="#" onclick="renderFrame('login')" class="link-small" style="display: block; margin-top: 20px; text-decoration: none;">&lt; BACK TO LOGIN</a>
+                <a href="#" onclick="renderFrame('login')" class="btn-link color-primary" style="display: block; margin-top: 20px; font-weight: 500;">&lt; BACK TO LOGIN</a>
             </form>
         `;
 
@@ -137,19 +169,40 @@
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Cập nhật mật khẩu</button>
                 
-                <a href="#" onclick="renderFrame('login')" class="link-small" style="display: block; margin-top: 20px; text-decoration: none;">&lt; BACK TO LOGIN</a>
+                <a href="#" onclick="renderFrame('login')" class="btn-link color-primary" style="display: block; margin-top: 20px; font-weight: 500;">&lt; BACK TO LOGIN</a>
             </form>
         `;
 
         // --- GOOGLE LOGIN (MOCK) ---
         function handleGoogleLogin() {
-             // Mô phỏng liên kết với tài khoản Google, loại bỏ alert
              const mockUserName = "Sinh viên Google";
              localStorage.setItem('currentUser', mockUserName);
-             window.location.href = 'onboarding.html'; // Chuyển sang Onboarding trực tiếp
+             saveActivityData(mockUserName, true); 
+             window.location.href = 'dashboard.html';
         }
 
-        // --- RENDER LOGIC ---
+        // --- SUBMISSION HANDLER (CẬP NHẬT) ---
+        function handleAuthSubmit(event, flow) {
+            event.preventDefault();
+            
+            if (flow === 'login') {
+                const userName = document.getElementById('login-email')?.value || 'Sinh viên Tích cực';
+                localStorage.setItem('currentUser', userName);
+                saveActivityData(userName, false); 
+                window.location.href = 'dashboard.html';
+            } else if (flow === 'register') {
+                 const userName = document.getElementById('reg-name')?.value || 'Sinh viên Tích cực';
+                localStorage.setItem('currentUser', userName);
+                saveActivityData(userName, true); 
+                window.location.href = 'dashboard.html';
+            } else if (flow === 'forgot') {
+                renderFrame('reset');
+            } else if (flow === 'reset') {
+                renderFrame('login');
+            }
+        }
+
+        // --- RENDER LOGIC VÀ KIỂM TRA HASH NAVIGATION ---
         function renderFrame(frameName) {
             let htmlContent = '';
             switch (frameName) {
@@ -161,27 +214,14 @@
             authContentArea.innerHTML = htmlContent;
         }
 
-        // --- SUBMISSION HANDLER ---
-        function handleAuthSubmit(event, flow) {
-            event.preventDefault();
-            
-            if (flow === 'login' || flow === 'register') {
-                const userName = document.getElementById('reg-name')?.value || 'Sinh viên Tích cực';
-                localStorage.setItem('currentUser', userName);
-                // Loại bỏ alert và chuyển hướng trực tiếp
-                window.location.href = 'onboarding.html';
-            } else if (flow === 'forgot') {
-                // Loại bỏ alert và chuyển hướng đến trang reset
-                renderFrame('reset');
-            } else if (flow === 'reset') {
-                // Loại bỏ alert và chuyển hướng đến trang login
-                renderFrame('login');
-            }
-        }
-
-        // Khởi tạo trang với Frame Đăng nhập
+        // Khởi tạo trang với Frame Đăng nhập, kiểm tra hash cho Register
         document.addEventListener('DOMContentLoaded', () => {
-            renderFrame('login');
+            const hash = window.location.hash.substring(1);
+            if (hash === 'register') {
+                 renderFrame('register');
+            } else {
+                 renderFrame('login');
+            }
         });
     </script>
 
